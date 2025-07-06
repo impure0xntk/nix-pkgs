@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><state>
+    <page factory="org.openjdk.jmc.flightrecorder.ui.itemhandler" id="60055e33-3942-437f-b615-bcd27c872f59">
+        <state icon="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAEZJREFUOI3tkzEVgDAUxHI87NUAFtBTCxiowDCwsNK/MDR7ctNFlQI7QJIpWX0CAOO8PsmtHwBsU9MvVmAF/hGIavlMlUff+U0UGh5oXJ0AAAAASUVORK5CYII=" name="Object Allocation Sample" showFilter="true">
+            <pageFilter kind="TYPE" type="jdk.ObjectAllocationSample"/>
+            <listAndChart selectedSubTab="0">
+                <listSettings>
+                    <column hidden="false" id="startTime:timestamp" width="150"/>
+                    <column hidden="false" id="eventThread:thread" width="150"/>
+                    <column hidden="false" id="(eventType):type" width="150"/>
+                    <column hidden="false" id="objectClass:class" width="150"/>
+                    <column hidden="false" id="weight:memory" width="780"/>
+                </listSettings>
+                <chartSettings barChartAggregates="Count" showSpanChart="false"/>
+                <itemListFilter showFilter="true" showSearch="false" weights="230,769">
+                    <filterEditor showColumnHeaders="false">
+                        <columnWidths width0="150" width1="100" width2="500"/>
+                    </filterEditor>
+                </itemListFilter>
+            </listAndChart>
+            <histogram>
+                <table sortColumn="itemhistogram.count">
+                    <column hidden="false" id="itemhistogram.key" width="500"/>
+                    <column hidden="false" id="itemhistogram.count" sortAscending="false" width="150"/>
+                    <column hidden="false" id="SUMweight:memory"/>
+                    <column hidden="true" id="AVGweight:memory"/>
+                    <column hidden="true" id="MINweight:memory"/>
+                    <column hidden="true" id="MAXweight:memory"/>
+                    <column hidden="true" id="STDDEVPweight:memory"/>
+                    <column hidden="true" id="AVGstartTime:timestamp"/>
+                    <column hidden="true" id="MINstartTime:timestamp"/>
+                    <column hidden="true" id="MAXstartTime:timestamp"/>
+                    <column hidden="true" id="STDDEVPstartTime:timestamp"/>
+                </table>
+            </histogram>
+            <histogramSash weights="1000"/>
+            <filterSash weights="142,857"/>
+            <pageFilterEditor showColumnHeaders="false">
+                <columnWidths width0="150" width1="100" width2="500"/>
+            </pageFilterEditor>
+        </state>
+    </page>
+    <page factory="org.openjdk.jmc.flightrecorder.ui.itemhandler" id="7360522f-2983-47d2-a286-b81e18b66452">
+        <state icon="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAEVJREFUOI3tk6EVgDAUxHI8pqhhTUbompiuEQQGS79BND45dVGlwA6QZEpWnwBAb9cn+RwHANvU9IsVWIF/BKJaPlPl0TftHRQaQtxm2wAAAABJRU5ErkJggg==" name="Object Count after GC" showFilter="true">
+            <pageFilter kind="TYPE" type="jdk.ObjectCountAfterGC"/>
+            <listAndChart selectedSubTab="1">
+                <listSettings sortColumn="count:number">
+                    <column hidden="false" id="startTime:timestamp" width="150"/>
+                    <column hidden="false" id="(eventType):type" width="150"/>
+                    <column hidden="false" id="count:number" sortAscending="false" width="150"/>
+                    <column hidden="false" id="gcId:number" width="150"/>
+                    <column hidden="false" id="objectClass:class" width="150"/>
+                    <column hidden="false" id="totalSize:memory" width="630"/>
+                </listSettings>
+                <chartSettings barChartAggregates="Count" showSpanChart="false"/>
+                <itemListFilter showFilter="false" showSearch="false" weights="230,769">
+                    <filterEditor showColumnHeaders="false">
+                        <columnWidths width0="150" width1="100" width2="500"/>
+                    </filterEditor>
+                </itemListFilter>
+            </listAndChart>
+            <histogram>
+                <table sortColumn="itemhistogram.count">
+                    <column hidden="false" id="itemhistogram.key" width="500"/>
+                    <column hidden="false" id="itemhistogram.count" sortAscending="false" width="150"/>
+                    <column hidden="false" id="SUMtotalSize:memory"/>
+                    <column hidden="true" id="AVGtotalSize:memory"/>
+                    <column hidden="true" id="MINtotalSize:memory"/>
+                    <column hidden="true" id="MAXtotalSize:memory"/>
+                    <column hidden="true" id="STDDEVPtotalSize:memory"/>
+                    <column hidden="true" id="SUMgcId:number"/>
+                    <column hidden="true" id="AVGgcId:number"/>
+                    <column hidden="true" id="MINgcId:number"/>
+                    <column hidden="true" id="MAXgcId:number"/>
+                    <column hidden="true" id="STDDEVPgcId:number"/>
+                    <column hidden="true" id="AVGstartTime:timestamp"/>
+                    <column hidden="true" id="MINstartTime:timestamp"/>
+                    <column hidden="true" id="MAXstartTime:timestamp"/>
+                    <column hidden="true" id="STDDEVPstartTime:timestamp"/>
+                    <column hidden="true" id="SUMcount:number"/>
+                    <column hidden="true" id="AVGcount:number"/>
+                    <column hidden="true" id="MINcount:number"/>
+                    <column hidden="true" id="MAXcount:number"/>
+                    <column hidden="true" id="STDDEVPcount:number"/>
+                </table>
+            </histogram>
+            <histogramSash weights="1000"/>
+            <filterSash weights="142,857"/>
+            <pageFilterEditor showColumnHeaders="false">
+                <columnWidths width0="150" width1="100" width2="500"/>
+            </pageFilterEditor>
+        </state>
+    </page>
+    <page factory="org.openjdk.jmc.flightrecorder.ui.itemhandler" id="b48b0862-d1ac-423a-9683-d6c42e23b298">
+        <state icon="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAEVJREFUOI3tk6EVgDAUxHI81qpiLlTnQnWwIDBY+g2i8cmpiyoFdoAkU7L6BADOa3yS+9EA2KamX6zACvwjENXymSqPvgEEDBQaXVV39wAAAABJRU5ErkJggg==" name="Old Object Sample" showFilter="true">
+            <pageFilter kind="TYPE" type="jdk.OldObjectSample"/>
+            <listAndChart selectedSubTab="0">
+                <listSettings>
+                    <column hidden="false" id="startTime:timestamp" width="150"/>
+                    <column hidden="false" id="duration:timespan" width="150"/>
+                    <column hidden="false" id="(endTime):timestamp" width="150"/>
+                    <column hidden="false" id="eventThread:thread" width="150"/>
+                    <column hidden="false" id="(eventType):type" width="150"/>
+                    <column hidden="false" id="allocationTime:timestamp" width="150"/>
+                    <column hidden="false" id="arrayElements:number" width="150"/>
+                    <column hidden="false" id="lastKnownHeapUsage:memory" width="150"/>
+                    <column hidden="false" id="object:oldObject" width="150"/>
+                    <column hidden="false" id="objectAge:timespan" width="150"/>
+                    <column hidden="false" id="root:oldObjectGcRoot" width="150"/>
+                </listSettings>
+                <chartSettings barChartAggregates="Count" showSpanChart="false"/>
+                <itemListFilter showFilter="false" showSearch="false" weights="230,769">
+                    <filterEditor showColumnHeaders="false">
+                        <columnWidths width0="150" width1="100" width2="500"/>
+                    </filterEditor>
+                </itemListFilter>
+            </listAndChart>
+            <histogram>
+                <table sortColumn="itemhistogram.count">
+                    <column hidden="false" id="itemhistogram.key" width="500"/>
+                    <column hidden="false" id="itemhistogram.count" sortAscending="false" width="150"/>
+                    <column hidden="true" id="SUMarrayElements:number"/>
+                    <column hidden="true" id="AVGarrayElements:number"/>
+                    <column hidden="true" id="MINarrayElements:number"/>
+                    <column hidden="true" id="MAXarrayElements:number"/>
+                    <column hidden="true" id="STDDEVParrayElements:number"/>
+                    <column hidden="true" id="AVGallocationTime:timestamp"/>
+                    <column hidden="true" id="MINallocationTime:timestamp"/>
+                    <column hidden="true" id="MAXallocationTime:timestamp"/>
+                    <column hidden="true" id="STDDEVPallocationTime:timestamp"/>
+                    <column hidden="false" id="SUMlastKnownHeapUsage:memory"/>
+                    <column hidden="true" id="AVGlastKnownHeapUsage:memory"/>
+                    <column hidden="true" id="MINlastKnownHeapUsage:memory"/>
+                    <column hidden="true" id="MAXlastKnownHeapUsage:memory"/>
+                    <column hidden="true" id="STDDEVPlastKnownHeapUsage:memory"/>
+                    <column hidden="true" id="SUMduration:timespan"/>
+                    <column hidden="true" id="AVGduration:timespan"/>
+                    <column hidden="true" id="MINduration:timespan"/>
+                    <column hidden="true" id="MAXduration:timespan"/>
+                    <column hidden="true" id="STDDEVPduration:timespan"/>
+                    <column hidden="true" id="SUMobjectAge:timespan"/>
+                    <column hidden="true" id="AVGobjectAge:timespan"/>
+                    <column hidden="true" id="MINobjectAge:timespan"/>
+                    <column hidden="true" id="MAXobjectAge:timespan"/>
+                    <column hidden="true" id="STDDEVPobjectAge:timespan"/>
+                    <column hidden="true" id="AVGstartTime:timestamp"/>
+                    <column hidden="true" id="MINstartTime:timestamp"/>
+                    <column hidden="true" id="MAXstartTime:timestamp"/>
+                    <column hidden="true" id="STDDEVPstartTime:timestamp"/>
+                    <column hidden="true" id="AVG(endTime):timestamp"/>
+                    <column hidden="true" id="MIN(endTime):timestamp"/>
+                    <column hidden="true" id="MAX(endTime):timestamp"/>
+                    <column hidden="true" id="STDDEVP(endTime):timestamp"/>
+                </table>
+            </histogram>
+            <histogramSash weights="1000"/>
+            <filterSash weights="142,857"/>
+            <pageFilterEditor showColumnHeaders="false">
+                <columnWidths width0="150" width1="100" width2="500"/>
+            </pageFilterEditor>
+        </state>
+    </page>
+</state>

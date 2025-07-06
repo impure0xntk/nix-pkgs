@@ -1,0 +1,34 @@
+{ pkgs, lib, prev, ... }:
+let
+in {
+
+yarnConfigHook = makeSetupHook {
+    name = "yarn-config-hook";
+    propagatedBuildInputs = [
+      yarn
+      fixup-yarn-lock
+    ];
+    meta = {
+      description = "Install nodejs dependencies from an offline yarn cache produced by fetchYarnDeps";
+    };
+  } ${prev./yarn-config-hook.sh;
+
+  yarnBuildHook = makeSetupHook {
+    name = "yarn-build-hook";
+    meta = {
+      description = "Run yarn build in buildPhase";
+    };
+  } ./yarn-build-hook.sh;
+
+  yarnInstallHook = makeSetupHook {
+    name = "yarn-install-hook";
+    propagatedBuildInputs = [
+      yarn
+      nodejsInstallManuals
+      nodejsInstallExecutables
+    ];
+    substitutions = {
+      jq = lib.getExe jq;
+    };
+  } ./yarn-install-hook.sh;
+}
