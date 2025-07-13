@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-25.05";
+    flake-utils.url = "github:numtide/flake-utils";
 
     pyproject-nix = {
       url = "github:nix-community/pyproject.nix";
@@ -21,10 +22,13 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    
+
     nix-lib = {
       url = "github:impure0xntk/nix-lib";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
   };
 
@@ -32,33 +36,36 @@
     {
       self,
       nixpkgs,
+      flake-utils,
       nix-lib,
       ...
     }@inputs:
     let
       # Inspire: https://github.com/tiredofit/home/blob/main/flake.nix
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      lib = pkgs.lib.extend nix-lib.overlays.default;
       pkgsPath = ./pkgs;
-      
-      # TODO: make attrset as result for overlays as flake output
-      overlays = import ./overlays {
-        inherit inputs lib pkgsPath;
-      };
-    in {
-      # TODO: add overlays.<name> for each overlay.
+      # in flake-utils.lib.eachDefaultSystem (system:
+    in
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        lib = nix-lib.lib.${system};
+        overlays = import ./overlays {
+          inherit inputs pkgsPath lib;
+        };
+      in
+      {
+        # TODO: add overlays.<name> for each overlay.
 
-      # overlays.default = final: prev: ...
-      nixpkgs.overlays = overlays;
-      
-      checks.${system}.pkgs-test =
-        import ./tests { inherit lib;
+        # overlays.default = final: prev: ...
+        pkgsOverlay = overlays;
+
+        checks.pkgs-test = import ./tests {
+          inherit lib;
           pkgs = import nixpkgs {
             inherit system;
-            # overlays =  [ self.overlays.default ];
-            overlays = self.nixpkgs.overlays;
+            overlays = overlays;
           };
         };
-    };
+      }
+    );
 }
