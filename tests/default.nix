@@ -1,7 +1,17 @@
 { pkgs, lib, }:
 
-pkgs.runCommand "overlay-test" { } ''
+with pkgs;
+
+let
+  packages = [
+    jetbrains.gateway
+    mvnd.maven
+  ];
+in
+runCommand "overlay-test" {
+  nativeBuildInputs = [ coreutils ];
+} ''
   set -x
-  echo "${pkgs.mvnd.maven}" > $out
+  ${lib.concatMapStringsSep "\n" (p: ''echo "${p}" >> $out'') packages}
   set +x
 ''
