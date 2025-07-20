@@ -12,8 +12,6 @@ pkgs.stdenv.mkDerivation {
 
   nativeBuildInputs = [ pkgs.makeWrapper ];
 
-  propagatedBuildInputs = with pkgs; [ gnugrep iproute2 ];
-
   patches = [
     # WSL 2 systemd patch
     (pkgs.fetchpatch {
@@ -21,17 +19,29 @@ pkgs.stdenv.mkDerivation {
       hash = "sha256-TtUMi49Hlsl8FwZuMh71ySTudB6kNdJ4808kVfIFK4Y=";
     })
   ];
+
   installPhase = ''
     src="pinentry-wsl-ps1.sh"
     dest="$out/bin/pinentry"
-    install -D -m+x "$src" "$dest"
-    patchShebangs "$dest"
+
+    install -D "$src" "$dest"
+    patchShebangs $dest
+    wrapProgram $dest \
+      --set PATH ${
+        lib.makeBinPath (
+          with pkgs;
+          [
+            coreutils
+            gnugrep
+            iproute2
+          ]
+        )
+      }:/mnt/c/Windows/System32/WindowsPowerShell/v1.0
   '';
 
   meta = with lib; {
     description = "GUI for GPG within Windows Subsystem for Linux";
     homepage = "https://github.com/diablodale/pinentry-wsl-ps1";
     license = licenses.mpl20;
-    maintainers = [ maintainers.loicreynier ];
   };
 }
