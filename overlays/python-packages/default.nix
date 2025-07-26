@@ -41,12 +41,13 @@ final: prev:
       args = { inherit final prev pyself pysuper; };
       in {
         mcp = import ./mcp args;
-        llm = import ./llm args;
-        llm-ollama = import ./llm-ollama args; # depends on llm tools feature
-        condense-json = import ./condense-json args; # depends on llm
+        
+        # Not used, just keep for python overlay examples.
+        # llm = import ./llm args;
+        # condense-json = import ./condense-json args; # depends on llm
       };
     };
     inherit pyproject-nix;
     mcp = final.python3Packages.mcp;
-    llm = final.python3Packages.llm;
+    # llm = final.python3Packages.llm;
 }

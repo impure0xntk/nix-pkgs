@@ -1,4 +1,6 @@
 # Expects mcp > 1.6.0. See overlays/python-packages/mcp
+
+# Not used, just keep for pyproject-nix examples.
 {
   pkgs,
   lib,
