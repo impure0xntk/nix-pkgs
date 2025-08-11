@@ -154,11 +154,17 @@ in
     textlint-rule-alex # insensitive words
     textlint-rule-max-comma # limit maximum comma count of sentence
     textlint-rule-stop-words # find filler words, buzzwords, and clichés
-    textlint-rule-diacritics # check correct usage of diacritics
     textlint-rule-terminology
     textlint-rule-en-max-word-count
     textlint-rule-unexpanded-acronym
     textlint-rule-no-start-duplicated-conjunction
+    (genRuleNpmPackage (genRuleArgs rec {
+      pname = "textlint-rule-diacritics";
+      version = "2.1.4";
+      owner = "sapegin";
+      rev = "v${version}";
+      sha256 = "sha256-B6QYHGxKl7mI/fnaW9HJsCP/vLDIujx7F/0OfcEogEs=";
+    }))
     (genRuleNpmPackage (genRuleArgs rec {
       pname = "textlint-rule-apostrophe";
       version = "3.0.0";
@@ -454,11 +460,6 @@ index 6c3e748..dbaf163 100644
 
         mkdir -p $out/lib/node_modules/${pname}
         cp -r . $out/lib/node_modules/${pname}
-
-        # The workaround of missing deps
-        cp -r $out/lib/node_modules/${pname}/packages/@proofdict/${pname}/node_modules \
-          $out/lib/node_modules/${pname}/
-        rm -r $out/lib/node_modules/${pname}/packages/@proofdict/${pname}/node_modules
 
         runHook postInstall
       '';
