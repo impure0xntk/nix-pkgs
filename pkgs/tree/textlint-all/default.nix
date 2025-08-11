@@ -57,8 +57,9 @@ let
     };
   } // builtins.removeAttrs args ["repo" "owner" "rev" "sha256"];
 
+  textlint' = import ./textlint.nix {inherit pkgs;};
 in
-  pkgs.textlint.withPackages (with pkgs; [
+  (textlint'.override { textlint = textlint'; }).withPackages (with pkgs; [
     # General
     textlint-rule-prh
     (genRuleYarnPackage (genRuleArgs rec {
