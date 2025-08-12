@@ -521,6 +521,10 @@ index 6c3e748..dbaf163 100644
         # Create entrypoint
         cp -r $out/lib/node_modules/${pname}/packages/@proofdict/${pname}/lib \
           $out/lib/node_modules/${pname}/
+
+        # Add deps for monorepo.
+        cp -r $out/lib/node_modules/${pname}/packages/@proofdict/${pname}/node_modules/* \
+          $out/lib/node_modules/${pname}/node_modules/
       '';
     })
   ])
