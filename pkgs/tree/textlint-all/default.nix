@@ -331,7 +331,7 @@ in
       # textlint-rule-no-insert-re depends @textlint/ast-node-types
       postInstall = ''
         mkdir -p $out/lib/node_modules/@textlint-ja/${pname}/node_modules/@textlint/
-        cp -r -L ${pkgs.textlint}/lib/node_modules/@textlint/ast-node-types \
+        cp -r -L ${pkgs.textlint}/lib/packages/@textlint/ast-node-types \
           $out/lib/node_modules/@textlint-ja/${pname}/node_modules/@textlint/
       '';
     }))
