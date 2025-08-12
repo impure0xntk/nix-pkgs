@@ -18,9 +18,8 @@ pkgs.textlint.overrideAttrs (
     nativeBuildInputs = with pkgs; [
       nodejs
       pnpm.configHook
-      typescript
 
-      coreutils
+      gnused
     ];
 
     postPatch = ''

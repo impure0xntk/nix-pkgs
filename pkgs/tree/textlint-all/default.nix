@@ -56,10 +56,8 @@ let
       inherit repo owner sha256 rev;
     };
   } // builtins.removeAttrs args ["repo" "owner" "rev" "sha256"];
-
-  textlint' = import ./textlint.nix {inherit pkgs;};
 in
-  (textlint'.override { textlint = textlint'; }).withPackages (with pkgs; [
+  pkgs.textlint.withPackages (with pkgs; [
     # General
     textlint-rule-prh
     (genRuleYarnPackage (genRuleArgs rec {

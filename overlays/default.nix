@@ -6,7 +6,7 @@ let
     pkgs = final;
   };
   javaPackagesOverlay = import ./java-packages.nix;
-  nodePackagesOverlay = import ./node-packages.nix;
+  nodePackagesOverlay = import ./node-packages;
   pythonPackagesOverlay = import ./python-packages;
 
   customOverlays = [
