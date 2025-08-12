@@ -219,10 +219,10 @@ in
       pname = "textlint-rule-preset-ai-writing";
       version = "1.6.0-${rev}";
       rev = "sha256-BKkpI+RURSq6r2g+PttDwdJvgOBRDZm+qzUkGKz73UA=";
+      owner = "textlint-ja";
       src = pkgs.fetchFromGitHub {
-        inherit rev;
+        inherit rev owner;
         repo = pname;
-        owner = "textlint-ja";
         sha256 = "sha256-BKkpI+RURSq6r2g+PttDwdJvgOBRDZm+qzUkGKz73UA=";
       };
     in {
@@ -246,17 +246,23 @@ in
 
         cp ${./textlint-rule-preset-ai-writing}/pnpm-lock.yaml .
 
-        ${pkgs.jq}/bin/jq 'del(.packageManager)' package.json > package.json.tmp
+        ${pkgs.jq}/bin/jq 'del(.packageManager)' \
+          package.json > package.json.tmp
         mv package.json{.tmp,}
 
         runHook postConfigure
+      '';
+      buildPhase = ''
+        # Failed with " error TS2307: Cannot find module '@textlint/ast-node-types' or its corresponding type declarations"
+        # but create lib/ successfully.
+        pnpm build || true
       '';
 
       installPhase = ''
         runHook preInstall
 
-        mkdir -p $out/lib
-        cp -r node_modules $out/lib
+        mkdir -p $out/lib/node_modules/${pname}
+        cp -r . $out/lib/node_modules/${pname}
 
         runHook postInstall
       '';
