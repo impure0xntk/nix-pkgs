@@ -215,6 +215,53 @@ in
       sha256 = "sha256-CjSyWPnD/pnTW3cvmz8g4h6suAr+7VaT18ZdlnVnetg=";
       dontBuild = true;
     }))
+    (pkgs.stdenvNoCC.mkDerivation (let
+      pname = "textlint-rule-preset-ai-writing";
+      version = "1.6.0-${rev}";
+      rev = "sha256-BKkpI+RURSq6r2g+PttDwdJvgOBRDZm+qzUkGKz73UA=";
+      src = pkgs.fetchFromGitHub {
+        inherit rev;
+        repo = pname;
+        owner = "textlint-ja";
+        sha256 = "sha256-BKkpI+RURSq6r2g+PttDwdJvgOBRDZm+qzUkGKz73UA=";
+      };
+    in {
+      inherit pname version src;
+
+      # This project does not uses pnpm, but plain npm fails with "error: attribute 'resolved' missing".
+      # This is caused by textlint has workspace and the package in workspace does not add "resolved" key.
+      # Try to use pnpm instead.
+      pnpmDeps = pkgs.pnpm.fetchDeps {
+        inherit pname version src;
+        hash = "sha256-EMMYyr7d+JWPwr2BVtvDRy5zP3akwqcUEri9ud62JCM=";
+      };
+
+      nativeBuildInputs = with pkgs; [
+        nodejs
+        pnpm.configHook
+      ];
+
+      configurePhase = ''
+        runHook preConfigure
+
+        cp ${./textlint-rule-preset-ai-writing}/pnpm-lock.yaml .
+
+        ${pkgs.jq}/bin/jq 'del(.packageManager)' package.json > package.json.tmp
+        mv package.json{.tmp,}
+
+        runHook postConfigure
+      '';
+
+      installPhase = ''
+        runHook preInstall
+
+        mkdir -p $out/lib
+        cp -r node_modules $out/lib
+
+        runHook postInstall
+      '';
+    }))
+
     (genRuleYarnPackage (genRuleArgs rec {
       pname = "textlint-rule-preset-jtf-style";
       version = "3.0.2";
