@@ -18,7 +18,7 @@ let
   });
 in pkgs.python3Packages.buildPythonApplication rec {
   pname = "mcp-nixos";
-  version = "1.0.0";
+  version = "1.0.1";
 
   src = pkgs.fetchFromGitHub {
     owner = "utensils";
