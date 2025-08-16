@@ -108,14 +108,6 @@ in
       sha256 = "sha256-wzx7ckkC7c0n64gxHqpumWEFBJlPfrI9FeipsOy6U2o=";
     }))
     (genRuleNpmPackage (genRuleArgs {
-      # Too slow: 400msec.
-      pname = "textlint-rule-kmu-termcheck";
-      version = "1.1.1";
-      rev = "81f8838404d07ab3d7301c4b16c9ee07358847e2";
-      owner = "kmuto";
-      sha256 = "sha256-Oj+vg5p+Vf++8RlrPbh9Kiy8nQGF64JziKSz0fdveYM=";
-    }))
-    (genRuleNpmPackage (genRuleArgs {
       pname = "textlint-rule-no-curly-quotes";
       version = "1.0.0";
       owner = "aborazmeh";
