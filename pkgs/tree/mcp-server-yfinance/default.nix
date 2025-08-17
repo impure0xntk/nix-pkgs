@@ -3,32 +3,39 @@
   lib,
   ...
 }:
-pkgs.buildNpmPackage rec {
-  pname = "mcp-server-yfinance";
-  version = "09efa2bf58e138b23f60e8af83ab585e751eced3"; # 2025-04-06
+let
+in
+pkgs.python3Packages.buildPythonApplication rec {
+  pname = "mcp-server-yfinance-narumi";
+  version = "0.4.5";
+
   src = pkgs.fetchFromGitHub {
-    owner = "onori";
-    repo = "yfinance-mcp-server";
-    rev = version;
-    hash = "sha256-W8VEzC/EeSjR5bEbdkcbmdLpNIHaKo25ARWfBe0XWTc=";
+    owner = "narumiruna";
+    repo = "yfinance-mcp";
+    rev = "v${version}";
+    hash = "sha256-iIA8NsMkH0s48v0B5EcxtAx8o5po0y/PNQPGcGF6un8=";
   };
 
-  npmDeps = pkgs.importNpmLock {
-    npmRoot = src;
-  };
+  pyproject = true;
 
-  npmConfigHook = pkgs.importNpmLock.npmConfigHook;
-
-  nativeBuildInputs = with pkgs; [
-    typescript
+  build-system = with pkgs.python3Packages; [
+    hatchling
   ];
 
-  dontCheckForBrokenSymlinks = true;
+  dependencies = with pkgs.python3Packages; [
+    loguru
+    mcp
+    tabulate
+    yfinance
+  ];
+
+  # Disable tests for now - can enable once we know the test structure
+  doCheck = false;
 
   meta = {
-    description = "Unofficial MCP server for Yahoo Finance stock data.";
-    homepage = "https://github.com/onori/yfinance-mcp-server";
-    license = lib.licenses.isc;
-    mainProgram = "yfinance-mcp-server";
+    description = "No description or website provided";
+    homepage = "https://github.com/narumiruna/yfinance-mcp";
+    license = lib.licenses.mit;
+    mainProgram = "yfmcp";
   };
 }
