@@ -19,6 +19,10 @@ pkgs.python3Packages.buildPythonApplication rec {
 
   pyproject = true;
 
+  patches = [
+    ./patch-excel-mcp-log
+  ];
+
   build-system = with pkgs.python3Packages; [
     hatchling
   ];
