@@ -35,19 +35,24 @@ final: prev:
           );
     in
     pythonSet.mkVirtualEnv "${pname}-env" workspace.deps.default;
-    
-    python3 = prev.python3.override {
-      packageOverrides = pyself: pysuper: let
+
+  # Python overlays: https://discourse.nixos.org/t/add-python-package-via-overlay/19783/4
+  pythonPackagesOverlays =  (prev.pythonPackagesOverlays or [ ]) ++ [
+    (pyself: pysuper: let
       args = { inherit final prev pyself pysuper; };
       in {
         mcp = import ./mcp args;
-        
+
         # Not used, just keep for python overlay examples.
         # llm = import ./llm args;
         # condense-json = import ./condense-json args; # depends on llm
-      };
-    };
-    inherit pyproject-nix;
-    mcp = final.python3Packages.mcp;
-    # llm = final.python3Packages.llm;
+      })
+  ];
+  python3 = let self = prev.python3.override {
+    inherit self;
+    packageOverrides = prev.lib.composeManyExtensions final.pythonPackagesOverlays;
+  }; in self;
+  python3Packages = final.python3.pkgs;
+
+  inherit pyproject-nix;
 }
