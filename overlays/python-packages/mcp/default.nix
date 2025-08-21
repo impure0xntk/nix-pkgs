@@ -8,24 +8,27 @@
   ...
 }:
 pysuper.mcp.overridePythonAttrs (old: rec {
-  version = "1.9.4";
+  version = "1.13.0";
   src = prev.fetchFromGitHub {
     owner = "modelcontextprotocol";
     repo = "python-sdk";
     rev = "v${version}";
-    sha256 = "sha256-VXbu/wHbXGS+cISJVUgCVEpTmZc0VfckNRoMj3GDi/A=";
+    sha256 = "sha256-CxrUGgQfU1R87D3ZzZCHbQBMIOJRneH6CLbHS62sCaY=";
   };
-  dependencies = (old.dependencies or [ ]) ++ [ pysuper.python-multipart ];
+  dependencies = (old.dependencies or [ ]) ++ (with pysuper; [
+    python-multipart
+    jsonschema
+  ]);
   nativeBuildInputs = old.nativeBuildInputs or [ ] ++ [ pysuper.setuptools ];
   doCheck = false;
 
   postPatch = ''
     substituteInPlace pyproject.toml \
-        --replace-fail 'requires = ["hatchling", "uv-dynamic-versioning"]' \
+      --replace-fail 'requires = ["hatchling", "uv-dynamic-versioning"]' \
         'requires = ["hatchling"]' \
-        --replace-fail 'dynamic = ["version"]' \
+      --replace-fail 'dynamic = ["version"]' \
         'version = "${version}"' \
-        || true  # Ignore substitution failures
+      || true  # Ignore substitution failures
 
     rm -rf static
   '';
