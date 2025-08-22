@@ -8,12 +8,12 @@
   ...
 }:
 pysuper.mcp.overridePythonAttrs (old: rec {
-  version = "1.13.0";
+  version = "1.13.1";
   src = prev.fetchFromGitHub {
     owner = "modelcontextprotocol";
     repo = "python-sdk";
     rev = "v${version}";
-    sha256 = "sha256-CxrUGgQfU1R87D3ZzZCHbQBMIOJRneH6CLbHS62sCaY=";
+    sha256 = "sha256-tSC86viPDCZ6xb4lgfU7oKL176tmS3Tdx+ihP1fANhA=";
   };
   dependencies = (old.dependencies or [ ]) ++ (with pysuper; [
     python-multipart
