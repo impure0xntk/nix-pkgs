@@ -1,16 +1,17 @@
+# Add -go suffix to avoid conflict with mcp-servers-nix's one
 {
   pkgs,
   lib,
   ...
 }:
-pkgs.buildGoModule (finalAttrs: {
-  pname = "mcp-server-github";
+pkgs.buildGoModule rec {
+  pname = "mcp-server-github-go";
   version = "0.13.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "github";
     repo = "github-mcp-server";
-    tag = "v${finalAttrs.version}";
+    tag = "v${version}";
     hash = "sha256-E1ta3qt0xXOFw9KhQYKt6cLolJ2wkH6JU22NbCWeuf0=";
   };
   vendorHash = "sha256-F6PR4bxFSixgYQX65zjrVxcxEQxCoavQqa5mBGrZH8o=";
@@ -21,4 +22,4 @@ pkgs.buildGoModule (finalAttrs: {
     license = lib.licenses.mit;
     mainProgram = "github-mcp-server";
   };
-})
+}
