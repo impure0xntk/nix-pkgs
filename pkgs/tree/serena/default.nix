@@ -96,7 +96,6 @@ pkgs.python3Packages.buildPythonApplication rec {
     pyyaml
     ruamel-yaml
     jinja2
-    python-dotenv
     pathspec
     psutil
     docstring-parser
