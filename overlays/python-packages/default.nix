@@ -41,11 +41,17 @@ final: prev:
     (pyself: pysuper: let
       args = { inherit final prev pyself pysuper; };
       in {
+        pydantic = import ./pydantic args;
         mcp = import ./mcp args;
+        fastmcp = import ./fastmcp args;
 
         # Not used, just keep for python overlay examples.
         # llm = import ./llm args;
         # condense-json = import ./condense-json args; # depends on llm
+
+        django = pysuper.django.overridePythonAttrs (old: {
+          doCheck = false; # uses too much RAM.
+        });
       })
   ];
   python3 = let self = prev.python3.override {

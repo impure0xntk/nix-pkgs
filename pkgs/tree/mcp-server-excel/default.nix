@@ -5,16 +5,25 @@
   ...
 }:
 let
+  typer' = pkgs.python3Packages.typer.overridePythonAttrs (old: rec {
+    version = "0.16.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "fastapi";
+      repo = "typer";
+      tag = version;
+      hash = "sha256-6a2y0WlD0CK9a1zSvHCZPP0anhRBJ5+FGrQcNfxlg1U=";
+    };
+  });
 in
 pkgs.python3Packages.buildPythonApplication rec {
   pname = "mcp-server-excel";
-  version = "0.1.4";
+  version = "0.1.7";
 
   src = pkgs.fetchFromGitHub {
     owner = "haris-musa";
     repo = "excel-mcp-server";
     rev = "v${version}";
-    hash = "sha256-D7++tjn9W+WYjeSSVoVpvuvQWOvoISqPbzvtQpTPELg=";
+    hash = "sha256-pXMC+yLFFjhYlDy7zm9SdFzPTubmxvNXIqtPuBmtdJc=";
   };
 
   pyproject = true;
@@ -28,9 +37,9 @@ pkgs.python3Packages.buildPythonApplication rec {
   ];
 
   dependencies = with pkgs.python3Packages; [
-    mcp
+    fastmcp
     openpyxl
-    typer
+    typer'
   ];
 
   # Disable tests for now - can enable once we know the test structure
