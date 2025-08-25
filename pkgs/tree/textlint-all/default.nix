@@ -209,14 +209,22 @@ in
     }))
     (pkgs.stdenvNoCC.mkDerivation (let
       pname = "textlint-rule-preset-ai-writing";
-      version = "1.6.0-${rev}";
-      rev = "sha256-BKkpI+RURSq6r2g+PttDwdJvgOBRDZm+qzUkGKz73UA=";
+      version = "1.6.1";
+      rev = "v${version}";
       owner = "textlint-ja";
       src = pkgs.fetchFromGitHub {
         inherit rev owner;
         repo = pname;
-        sha256 = "sha256-BKkpI+RURSq6r2g+PttDwdJvgOBRDZm+qzUkGKz73UA=";
+        sha256 = "sha256-pSRFXK5NwS3z11NGPQ7y2FnWACpumQirqBg1fYrBfcE=";
       };
+
+      changeToPnpnProject = ''
+        cp ${./textlint-rule-preset-ai-writing}/pnpm-lock.yaml .
+
+        ${pkgs.jq}/bin/jq 'del(.packageManager)' \
+          package.json > package.json.tmp
+        mv package.json{.tmp,}
+      '';
     in {
       inherit pname version src;
 
@@ -226,6 +234,7 @@ in
       pnpmDeps = pkgs.pnpm.fetchDeps {
         inherit pname version src;
         hash = "sha256-EMMYyr7d+JWPwr2BVtvDRy5zP3akwqcUEri9ud62JCM=";
+        preInstall = changeToPnpnProject;
       };
 
       nativeBuildInputs = with pkgs; [
@@ -236,11 +245,7 @@ in
       configurePhase = ''
         runHook preConfigure
 
-        cp ${./textlint-rule-preset-ai-writing}/pnpm-lock.yaml .
-
-        ${pkgs.jq}/bin/jq 'del(.packageManager)' \
-          package.json > package.json.tmp
-        mv package.json{.tmp,}
+        ${changeToPnpnProject}
 
         runHook postConfigure
       '';
