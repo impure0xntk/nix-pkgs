@@ -215,7 +215,7 @@ in
       src = pkgs.fetchFromGitHub {
         inherit rev owner;
         repo = pname;
-        sha256 = "sha256-pSRFXK5NwS3z11NGPQ7y2FnWACpumQirqBg1fYrBfcE=";
+        sha256 = "sha256-MI1jm/3KSOYxbZ5+FUL+MSBqojNnUDJENyzkZ10aD6o=";
       };
 
       changeToPnpnProject = ''
