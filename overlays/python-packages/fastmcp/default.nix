@@ -5,6 +5,9 @@
   prev,
   pyself,
   pysuper,
+
+  mcp,
+  pydantic,
   ...
 }:
 final.python3Packages.buildPythonPackage rec {

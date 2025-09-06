@@ -30,37 +30,6 @@ let
       hash = "sha256-bAbgamJjB+NpPnZHqYOrOhatGGgjzy558BrF3GwHOHE=";
     };
   });
-  pyright = pkgs.python3Packages.buildPythonApplication rec {
-    pname = "pyright-python";
-    version = "1.1.404";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "RobertCraigie";
-      repo = pname;
-      rev = "v${version}";
-      hash = "sha256-QIidogVcU+NqpOU5s9Y74aNXz6G4z0qPUdTQ9fd36VM=";
-    };
-
-    pyproject = true;
-
-    build-system = with pkgs.python3Packages; [
-      setuptools
-    ];
-
-    dependencies = with pkgs.python3Packages; [
-      nodeenv
-      typing-extensions
-    ];
-
-    # Disable tests for now - can enable once we know the test structure
-    doCheck = false;
-
-    meta = {
-      description = "Python command line wrapper for pyright, a static type checker";
-      homepage = "https://github.com/RobertCraigie/pyright-python";
-      license = lib.licenses.mit;
-    };
-  };
 in
 pkgs.python3Packages.buildPythonApplication rec {
   pname = "serena";
@@ -83,7 +52,6 @@ pkgs.python3Packages.buildPythonApplication rec {
     anthropic
     joblib
     sensai-utils
-    pyright
   ] ++ (with pkgs.python3Packages; [
     mcp
     requests
@@ -92,6 +60,7 @@ pkgs.python3Packages.buildPythonApplication rec {
 
     flask
     pydantic
+    pyright
     types-pyyaml
     pyyaml
     ruamel-yaml

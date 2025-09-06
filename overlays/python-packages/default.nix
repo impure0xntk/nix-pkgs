@@ -40,10 +40,11 @@ final: prev:
   pythonPackagesOverlays =  (prev.pythonPackagesOverlays or [ ]) ++ [
     (pyself: pysuper: let
       args = { inherit final prev pyself pysuper; };
-      in {
+      in rec {
         pydantic = import ./pydantic args;
+        pyright = import ./pyright args;
         mcp = import ./mcp args;
-        fastmcp = import ./fastmcp args;
+        fastmcp = import ./fastmcp (args // { inherit mcp pydantic; });
 
         # Not used, just keep for python overlay examples.
         # llm = import ./llm args;
