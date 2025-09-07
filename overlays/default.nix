@@ -5,12 +5,14 @@ let
     inherit lib prev;
     pkgs = final;
   };
+  generalPackagesOverlay = import ./general-packages;
   javaPackagesOverlay = import ./java-packages.nix;
   nodePackagesOverlay = import ./node-packages;
   pythonPackagesOverlay = import ./python-packages;
 
   customOverlays = [
     my
+    generalPackagesOverlay
     javaPackagesOverlay
     nodePackagesOverlay
     (pythonPackagesOverlay { 
