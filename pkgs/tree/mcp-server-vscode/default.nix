@@ -8,12 +8,12 @@
 }:
 pkgs.buildNpmPackage rec {
   pname = "mcp-server-vscode";
-  version = "0.2.0";
+  version = "0.3.0";
   src = pkgs.fetchFromGitHub {
     owner = "juehang";
     repo = "vscode-mcp-server";
     rev = version;
-    hash = "sha256-iXqsznVi4RqbRyU0BuAw1ctNEq4iLWe4xC72EcDofS0=";
+    hash = "sha256-rYsJ9af5a4spbkXVQk7PL4agG13eEUXtf9J8H0oGvhA=";
   };
 
   # Edit modelcontextprotocol/inspector information: cannot use resolved url as git+ssh://...
@@ -22,8 +22,8 @@ pkgs.buildNpmPackage rec {
   npmDeps =
     let
       mcp-inspector = {
-        version = "0.10.2";
-        hash = "sha256-DWqhUoBe9JG/3/jW+Kh9cLPnJX2DKwWrS5ileSbDFrU=";
+        version = "0.16.6";
+        hash = "sha256-1HvjFYEFLv6aoI64lGAHznOeTR0J5leat+UOPkTXObo=";
       };
     in
     pkgs.importNpmLock {
@@ -40,7 +40,6 @@ pkgs.buildNpmPackage rec {
         };
       };
     };
-  npmDepsHash = "sha256-F/1d5Igc9WS0lOKFySFOSrIravXp9+8rlkjmsAEJSzM=";
 
   npmConfigHook = pkgs.importNpmLock.npmConfigHook;
 
