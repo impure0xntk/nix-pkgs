@@ -1,10 +1,10 @@
 # TODO: consider to move to work package.
 final: prev: rec {
   # TODO: replace to zulu25 after releasing NixOS 25.05
-  jdk = prev.zulu24.overrideAttrs (old: {
+  jdk = prev.zuluLTS.overrideAttrs (old: {
     meta.priority = 10; # low
   });
-  zulu = final.zulu24;
+  zulu = final.zuluLTS;
 
   defaultJDK = jdk;
   jdk_headless = jdk.overrideAttrs (_: {
@@ -16,9 +16,6 @@ final: prev: rec {
   tunedJavaArgs = [
     "-XX:+UseStringDeduplication"
     "-XX:+UseZGC" # "-XX:+ZGenerational" is the default.
-    # TODO: remove after NixOS 25.05, Java25 or Maven 3.9.10/4.0.0
-    # https://developer.mamezou-tech.com/blogs/2025/03/30/maven-java24-warning/
-    "--enable-native-access=ALL-UNNAMED" "--sun-misc-unsafe-memory-access=allow"
   ];
   tunedJavaToolArgs = tunedJavaArgs ++ [ ## unofficial: https://dev.to/nfrankel/faster-maven-builds-17dn etc...;
     "-XX:-TieredCompilation" "-XX:TieredStopAtLevel=1"
