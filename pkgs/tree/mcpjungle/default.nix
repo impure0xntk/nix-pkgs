@@ -6,14 +6,14 @@
 }:
 pkgs.buildGoModule rec {
   pname = "mcpjungle";
-  version = "0.2.14";
+  version = "0.2.15";
   src = pkgs.fetchFromGitHub {
     owner = "mcpjungle";
     repo = "MCPJungle";
     tag = version;
-    hash = "sha256-rdvn9rRZrXSRShAY0V10MvC2Bj1i1If5MoSTaRYZvNg=";
+    hash = "sha256-8o6ZewsxD6SrdEBM/rzaRnD/mTqEMB/6uqTMIRxTwt4=";
   };
-  vendorHash = "sha256-szv2P9qFPALSBSjlmMJTAXcXDFn/wBuSqVlxYtoXX+s=";
+  vendorHash = "sha256-LOZFyUkjVpEVWzYFxStzfyL3Ls3UnwIJRNTaxd6pZNc=";
 
   meta = {
     description = "Self-hosted MCP Gateway and Registry for AI agents";
