@@ -4,42 +4,19 @@
   lib,
   ...
 }:
-pkgs.buildGoModule (self: rec {
+pkgs.buildGo125Module (self: rec { # TODO: remove buildGo"125"Module after NixOS 25.11 to use go latest
   pname = "mcp-server-devtools";
-  version = "0.33.0"; # TODO: update to 0.39.0 after NixOS 25.11 to use go 1.25
+  version = "0.40.7";
 
   src = pkgs.fetchFromGitHub {
     owner = "sammcj";
     repo = "mcp-devtools";
     tag = "v${version}";
-    hash = "sha256-89B6+lKCqApEhxLO5kmg5ZcquaRTOb8vnYhruqrfaEE=";
+    hash = "sha256-HR1Nh1MFRRIGH2D4TAlvhMH9CN6FOErUL9MvcI1kXbM=";
   };
-  vendorHash = "sha256-9XJRh065o0lsoKaQdrx2nEiKHX050QmFrpSmE4fxjwU=";
-
-  tags = [
-    "sbom_vuln_tools"
-  ];
+  vendorHash = "sha256-F6/U7cU9L3+I5ragr6BdG5z/nomVwiQZujNs13Y3oo4=";
 
   doCheck = false; # some deps try to connect internet
-
-  passthru = {
-    # TODO: not working
-    withDocumentWithoutLLM = self.overrideAttrs (prev:
-    let
-      purePkgs = import <nixpkgs> {}; # to avoid build pytorch because it uses too much RAM
-      pythonWithDocling = purePkgs.python3.withPackages (pyPkgs: [
-        pyPkgs.docling
-      ]);
-    in {
-      buildInputs = prev.buildInputs or [] ++ [ pythonWithDocling purePkgs.docling ];
-      nativeBuildInputs = prev.nativeBuildInputs or [] ++ [ pkgs.makeWrapper ];
-      postInstall = prev.postInstall or "" + ''
-        wrapProgram $out/bin/${self.meta.mainProgram} \
-        --set DOCLING_PYTHON_PATH ${pythonWithDocling}/bin/python \
-        --set DOCLING_HARDWARE_ACCELERATION "auto"
-      '';
-    });
-  };
 
   meta = {
     description = "A modular MCP server that provides commonly used developer tools for AI coding agents";
