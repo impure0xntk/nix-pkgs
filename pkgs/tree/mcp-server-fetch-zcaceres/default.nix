@@ -20,6 +20,7 @@ pkgs.stdenv.mkDerivation (finalAttrs: rec {
       src
       prePnpmInstall
       ;
+    fetcherVersion = 1;
     hash = "sha256-AZRKtWgEtvMJvj6sugWnmqFJDqKSRs3pG0ibKBhR98I=";
   };
 

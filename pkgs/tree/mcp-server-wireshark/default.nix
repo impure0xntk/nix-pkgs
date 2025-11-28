@@ -22,6 +22,7 @@ pkgs.stdenv.mkDerivation (finalAttrs: rec {
       version
       src
       ;
+    fetcherVersion = 1;
     hash = "sha256-NCjfe26Gj1FEa0YhiKjAkHp5CHZlcAFSJg2vTgNVPyI=";
   };
 

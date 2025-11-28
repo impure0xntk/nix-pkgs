@@ -1,7 +1,7 @@
 # https://github.com/dpausp/dotfiles/blob/588c6f8b74efbf8a3c57efccf4e1885eb6f032d1/.nixpkgs/config.nix#L65
 # https://hardselius.github.io/
 { pkgs, ... }:
-((pkgs.vim_configurable.overrideAttrs(prev: {
+((pkgs.vim-full.overrideAttrs(prev: {
   # Replace vimrc fo avoiding conflict with vim-tiny("syntax on" is unavailable)
   # And also disable plugin-loader.
   # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/applications/editors/vim/full.nix

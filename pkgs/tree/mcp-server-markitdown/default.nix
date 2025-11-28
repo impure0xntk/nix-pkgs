@@ -5,13 +5,13 @@
   ...
 }:
 let
-  markitdown = pkgs.markitdown;
+  markitdown = pkgs.python3Packages.markitdown;
 in
 pkgs.python3Packages.buildPythonApplication rec {
   pname = "mcp-server-markitdown";
   version = markitdown.version;
 
-  src = "${pkgs.markitdown.srcRoot}/packages/markitdown-mcp";
+  src = "${markitdown.srcRoot}/packages/markitdown-mcp";
 
   pyproject = true;
 

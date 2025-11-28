@@ -1,4 +1,4 @@
-#  Must be override cacheLocation attr. recommend to set the directory per user, like XDG_CACHE_DIR/textlint.";
+# Must be override cacheLocation attr. recommend to set the directory per user, like XDG_CACHE_DIR/textlint.";
 # /tmp/textlint does not work.
 { pkgs, lib, nodejs, cacheLocation ? "/tmp/textlint", ... }:
 
@@ -234,6 +234,7 @@ in
       pnpmDeps = pkgs.pnpm.fetchDeps {
         inherit pname version src;
         hash = "sha256-EMMYyr7d+JWPwr2BVtvDRy5zP3akwqcUEri9ud62JCM=";
+        fetcherVersion = 1;
         preInstall = changeToPnpnProject;
       };
 
@@ -334,7 +335,7 @@ in
       # textlint-rule-no-insert-re depends @textlint/ast-node-types
       postInstall = ''
         mkdir -p $out/lib/node_modules/@textlint-ja/${pname}/node_modules/@textlint/
-        cp -r -L ${pkgs.textlint}/lib/packages/@textlint/ast-node-types \
+        cp -r -L ${pkgs.textlint}/lib/node_modules/@textlint/ast-node-types \
           $out/lib/node_modules/@textlint-ja/${pname}/node_modules/@textlint/
       '';
     }))

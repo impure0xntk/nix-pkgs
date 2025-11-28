@@ -12,6 +12,7 @@ pkgs.textlint.overrideAttrs (
       pname = final.pname;
       version = final.version;
       src = final.src;
+      fetcherVersion = 1;
       hash = "sha256-GWnBZJJt9nu6sdsWWv6u5ALxnLYhgd9hy6S54eRr9Dw=";
     };
 
