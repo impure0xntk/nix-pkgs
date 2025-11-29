@@ -5,13 +5,19 @@
   ...
 }:
 let
-  markitdown = pkgs.python3Packages.markitdown;
+  version = pkgs.python3Packages.markitdown.version;
+  markitdownSource = pkgs.fetchFromGitHub {
+    owner = "microsoft";
+    repo = "markitdown";
+    rev = "v${version}";
+    hash = "sha256-bHnJsv4ln1W0lVbWwLmCzQ15KOGJZ9gF2yx4TDuBqBI=";
+  };
 in
-pkgs.python3Packages.buildPythonApplication rec {
+pkgs.python3Packages.buildPythonApplication {
   pname = "mcp-server-markitdown";
-  version = markitdown.version;
+  version = version;
 
-  src = "${markitdown.srcRoot}/packages/markitdown-mcp";
+  src = "${markitdownSource}/packages/markitdown-mcp";
 
   pyproject = true;
 

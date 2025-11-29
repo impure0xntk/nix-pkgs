@@ -1,3 +1,4 @@
+# In NixOS 25.11, this is not used: markitdown in nixpkgs is now latest version.
 # https://github.com/timblaktu/mcp-servers-nix/blob/6bd16cd70225afeb6278b2489b79d2f356b9acd2/pkgs/official/mcp-nixos/default.nix
 {
   pkgs,
