@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
     pyproject-nix = {
@@ -50,7 +51,7 @@
       let
         lib = nix-lib.lib.${system};
         overlays = import ./overlays {
-          inherit inputs pkgsPath lib;
+          inherit inputs system pkgsPath lib;
         };
       in
       {
