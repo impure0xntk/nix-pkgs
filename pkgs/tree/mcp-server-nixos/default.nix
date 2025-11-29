@@ -7,11 +7,11 @@
 let
   # TODO: remove after NixOS 25.11
   beautifulsoup4 = pkgs.python3Packages.beautifulsoup4.overrideAttrs (prev: rec {
-    version = "4.13.4"; # needs >= 4.13
+    version = "4.14.2"; # needs >= 4.13
     src = pkgs.fetchPypi {
       pname = prev.pname;
       inherit version;
-      hash = "sha256-27PE4c6uau/r2vJCMkcmDNBiQwpBDjjGbyuqUKhDcZU=";
+      hash = "sha256-Kpirn5RKEazunMhIUI7CjZIoq/1SLvD61qAqcuDe1p4=";
     };
     patches = [];
     propagatedBuildInputs = prev.propagatedBuildInputs or [] ++ (with pkgs.python3Packages; [  typing-extensions ]);
