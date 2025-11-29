@@ -39,20 +39,10 @@ final: prev:
   # Python overlays: https://discourse.nixos.org/t/add-python-package-via-overlay/19783/4
   pythonPackagesOverlays =  (prev.pythonPackagesOverlays or [ ]) ++ [
     (pyself: pysuper: let
-      args = { inherit final prev pyself pysuper; };
-      in rec {
-        pydantic = import ./pydantic args;
-        pyright = import ./pyright args;
-        mcp = import ./mcp args;
-        fastmcp = import ./fastmcp (args // { inherit mcp pydantic; });
-
+      # args = { inherit final prev pyself pysuper; };
+      in {
         # Not used, just keep for python overlay examples.
-        # llm = import ./llm args;
-        # condense-json = import ./condense-json args; # depends on llm
-
-        django = pysuper.django.overridePythonAttrs (old: {
-          doCheck = false; # uses too much RAM.
-        });
+        # mcp = import ./mcp args;
       })
   ];
   python3 = let self = prev.python3.override {
