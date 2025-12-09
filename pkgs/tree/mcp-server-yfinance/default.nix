@@ -7,13 +7,13 @@ let
 in
 pkgs.python3Packages.buildPythonApplication rec {
   pname = "mcp-server-yfinance-narumi";
-  version = "0.4.5";
+  version = "0.6.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "narumiruna";
     repo = "yfinance-mcp";
     rev = "v${version}";
-    hash = "sha256-iIA8NsMkH0s48v0B5EcxtAx8o5po0y/PNQPGcGF6un8=";
+    hash = "sha256-snZu+BXaVO8Vh2vW1qrBnp6bBzJb2rODcOFs6yOxdFA=";
   };
 
   pyproject = true;
@@ -25,6 +25,7 @@ pkgs.python3Packages.buildPythonApplication rec {
   dependencies = with pkgs.python3Packages; [
     loguru
     mcp
+    mplfinance
     tabulate
     yfinance
   ];
