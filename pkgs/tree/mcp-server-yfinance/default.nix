@@ -13,7 +13,7 @@ pkgs.python3Packages.buildPythonApplication rec {
     owner = "narumiruna";
     repo = "yfinance-mcp";
     rev = "v${version}";
-    hash = "sha256-snZu+BXaVO8Vh2vW1qrBnp6bBzJb2rODcOFs6yOxdFA=";
+    hash = "sha256-KxyrBqHCpNALCIObkORqlA2rOsgzT2Sy0gB5DJPAVQ0=";
   };
 
   pyproject = true;
