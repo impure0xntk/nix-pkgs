@@ -1,0 +1,12 @@
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+index eb3fb77..eff8a47 100644
+--- a/src/main/resources/application.properties
++++ b/src/main/resources/application.properties
+@@ -20,6 +20,7 @@ spring.jpa.properties.hibernate.dialect=${CC_SERVER_DB_HIBERNATE_DIALECT:org.hib
+ # ---------------------------------------
+ # Server Configuration
+ # ---------------------------------------
++server.address=${CC_ADDRESS:localhost}
+ server.port=${CC_PORT:8080}
+ server.servlet.session.timeout=${CC_SESSION_TIMEOUT:525960m}
+ 
