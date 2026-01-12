@@ -4,17 +4,22 @@
   lib,
   ...
 }:
-pkgs.buildGoModule (self: rec { # TODO: remove buildGo"125"Module after NixOS 25.11 to use go latest
+pkgs.pure-unstable.buildGoModule (self: rec {
   pname = "mcp-server-devtools";
-  version = "0.44.4";
+  version = "0.59.3";
 
   src = pkgs.fetchFromGitHub {
     owner = "sammcj";
     repo = "mcp-devtools";
     tag = "v${version}";
-    hash = "sha256-fqrh9lV6/scXOPVY7cgUeQLOcoivfeyhM63jd4763Jg=";
+    hash = "sha256-5Ljns7ZiypFm2CMjQz6MHw731JE3EURNSPfdjfoeXEs=";
   };
-  vendorHash = "sha256-MVCkU+Bpu27sSPYYkqB8EQnjH/eW1HUn6FFoy4okLpc=";
+  vendorHash = "sha256-hPpu8a0ExdZk33xRFZUp+Vc4xPpNpO4UPOW1wqDZsHY=";
+
+  # tests/benchmarks build failure workaround
+  preBuild = ''
+    rm -rf tests
+  '';
 
   doCheck = false; # some deps try to connect internet
 
