@@ -17,8 +17,6 @@ final: prev: rec {
     "-XX:+UseStringDeduplication"
     "-XX:+UseZGC" # "-XX:+ZGenerational" is the default.
     "-XX:+UseLargePages"
-    "-XX:+UseLargePagesInMetaspace"
-    "-XX:+AggressiveOpts"
   ];
   tunedJavaToolArgs = tunedJavaArgs ++ [ ## unofficial: https://dev.to/nfrankel/faster-maven-builds-17dn etc...;
     "-XX:-TieredCompilation" "-XX:TieredStopAtLevel=1"
