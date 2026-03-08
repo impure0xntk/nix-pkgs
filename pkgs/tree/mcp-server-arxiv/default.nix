@@ -4,66 +4,15 @@
   lib,
   ...
 }:
-let
-  # TODO: move to overlay
-  pymupdf4llm = pkgs.python3Packages.buildPythonPackage rec {
-    pname = "pymupdf4llm";
-    version = "0.0.17";
-    pyproject = true;
-
-    src = pkgs.fetchFromGitHub {
-      owner = "pymupdf";
-      repo = "RAG";
-      tag = "v${version}";
-      hash = "sha256-+RLK+UorkU8eVQJGrc7pVNZPtIpxMgA9mBKA6GeWUa0=";
-    };
-
-    sourceRoot = "${src.name}/pymupdf4llm";
-
-    build-system = [ pkgs.python3Packages.setuptools ];
-
-    dependencies = [ pkgs.python3Packages.pymupdf ];
-
-    checkPhase = ''
-      runHook preCheck
-
-      python3 - <<'EOF'
-      import fitz
-      import pymupdf4llm
-
-      doc = fitz.open()
-      page = doc.new_page()
-      page.insert_text((72, 72), "Hello, Nix!")
-      doc.save("input.pdf")
-
-      md = pymupdf4llm.to_markdown("input.pdf")
-      assert isinstance(md, str), "Returned value is not a string"
-      assert "Hello, Nix!" in md, "Returned value does not contain the expected text"
-      EOF
-
-      runHook postCheck
-    '';
-
-    pythonImportsCheck = [ "pymupdf4llm" ];
-
-    meta = {
-      description = "PyMuPDF Utilities for LLM/RAG - converts PDF pages to Markdown format for Retrieval-Augmented Generation";
-      homepage = "https://github.com/pymupdf/RAG";
-      changelog = "https://github.com/pymupdf/RAG/blob/${src.tag}/CHANGES.md";
-      license = lib.licenses.agpl3Only;
-      maintainers = with lib.maintainers; [ ryota2357 ];
-    };
-  };
-in
 pkgs.python3Packages.buildPythonApplication rec {
   pname = "mcp-server-arxiv";
-  version = "0.3.0";
+  version = "0.3.2";
 
   src = pkgs.fetchFromGitHub {
     owner = "blazickjp";
     repo = "arxiv-mcp-server";
-    rev = "cfb327acf8fffb49417d6381e4a9cd47761a1da3";
-    hash = "sha256-709e/l3xhd+u+q45HA2LWxJAG7nNk6V9wx2ZuUT/YFU=";
+    rev = "0065f5abb48f3eb4e011a130dd63fc52b381a1d2";
+    hash = "sha256-WuPsE5YFDArtnbTL4wISfacp0IXVNi89JMRmXuX9v1s=";
   };
 
   pyproject = true;
@@ -71,6 +20,13 @@ pkgs.python3Packages.buildPythonApplication rec {
   build-system = with pkgs.python3Packages; [
     hatchling
   ];
+
+  # Remove unused dependencies
+  postPatch = ''
+    substituteInPlace pyproject.toml \
+      --replace-fail '"black>=25.1.0",' "" \
+      --replace-fail '"pymupdf-layout>=1.26.6",' ""
+  '';
 
   dependencies = with pkgs.python3Packages; [
     arxiv
