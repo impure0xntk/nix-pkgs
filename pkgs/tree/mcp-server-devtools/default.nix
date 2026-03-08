@@ -34,7 +34,7 @@ let
 in package.overrideAttrs (old: {
   passthru = old.passthru // {
     withPackages = ps:
-      pkgs.runCommand "mcp-server-devtools-with-deps" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
+      pkgs.runCommand package.meta.mainProgram { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
         makeWrapper ${package}/bin/${package.meta.mainProgram} $out/bin/${package.meta.mainProgram} \
           --set PATH ${lib.makeBinPath ps}
     '';
