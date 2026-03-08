@@ -6,18 +6,18 @@
 }:
 pkgs.stdenv.mkDerivation rec {
   pname = "mcp-server-remote";
-  version = "0.1.17";
+  version = "0.1.38";
   src = pkgs.fetchFromGitHub {
     owner = "geelen";
     repo = "mcp-remote";
     rev = "v${version}";
-    hash = "sha256-aw8EIecMbXOejVzsfgYbFQWe7XPwtncMXO5Muk0ferQ=";
+    hash = "sha256-+oNI2Uq7gW3sLzJS4ky2+BXhTmo44+WpcdYgieGPpmI=";
   };
 
   pnpmDeps = pkgs.pnpm.fetchDeps {
     inherit pname version src;
     fetcherVersion = 1;
-    hash = "sha256-Qu0dpVhrt1QBZr+pbR9lqJFTvJVy2d9CELhYJALcZPQ=";
+    hash = "sha256-Br2kX9y/DOYQ2pV4bMX757MDpxdvRnphrgrbOPGPhuM=";
   };
 
   nativeBuildInputs = [
@@ -44,7 +44,7 @@ pkgs.stdenv.mkDerivation rec {
     echo '#!${pkgs.bash}/bin/bash' > $out/bin/mcp-remote
     echo "export NODE_PATH=$out/node_modules; ${pkgs.nodejs}/bin/node $out/dist/proxy.js \"\$@\"" >> $out/bin/mcp-remote
     chmod +x $out/bin/mcp-remote
-    
+
     runHook postInstall
   '';
 
