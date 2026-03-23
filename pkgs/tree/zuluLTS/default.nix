@@ -3,8 +3,8 @@
 prev.zulu17.override {
   dists.x86_64-linux = { # for tools.
     enableJavaFX = true;
-    zuluVersion = "25.32.17";
+    zuluVersion = "25.32.21";
     jdkVersion = "25.0.2";
-    hash = "sha256-8XUtAFG2yiM2Jd2ywYyRcO2+VcXuZRW/79jqAZfuHCA=";
+    hash = "sha256-lGrZdm2Y/Gq0laGhIAchl9tUmX9pJfuWaA8ezVWR204=";
   };
 }
