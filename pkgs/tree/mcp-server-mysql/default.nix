@@ -5,12 +5,12 @@
 }:
 pkgs.buildNpmPackage rec {
   pname = "mcp-server-mysql";
-  version = "2.0.5";
+  version = "2.0.8";
   src = pkgs.fetchFromGitHub {
     owner = "benborla";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-gfhxmDoSoABx6oibsOy91sfzIIOP34OJtzkvYoVIYKY=";
+    hash = "sha256-q3PrC8kCauaVcheUfRnnX4vhchBH6fXdWakuGCf+KyQ=";
   };
 
   npmDeps = pkgs.importNpmLock {
