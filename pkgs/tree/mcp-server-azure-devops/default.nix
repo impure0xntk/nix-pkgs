@@ -5,12 +5,12 @@
 }:
 pkgs.buildNpmPackage rec {
   pname = "mcp-server-azure-devops";
-  version = "2.4.0";
+  version = "2.5.0";
   src = pkgs.fetchFromGitHub {
     owner = "microsoft";
     repo = "azure-devops-mcp";
     rev = "v${version}";
-    hash = "sha256-I5EOPTxWJcfPV8I1Lwvyj3ljo8Y9W7GojtTWCAreU/g=";
+    hash = "sha256-iQwlcn2jIDBeLSfN1X8vEgo0knV3fWOCDpbcYwB0tqY=";
   };
 
   npmDeps = pkgs.importNpmLock {
