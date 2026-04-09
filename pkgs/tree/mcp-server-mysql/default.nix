@@ -10,7 +10,7 @@ pkgs.buildNpmPackage rec {
     owner = "benborla";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-q3PrC8kCauaVcheUfRnnX4vhchBH6fXdWakuGCf+KyQ=";
+    hash = "sha256-+EAc+HOMmHJZMV0hFKGixdRHwUS1A6w44SqJ+pbZl30=";
   };
 
   npmDeps = pkgs.importNpmLock {

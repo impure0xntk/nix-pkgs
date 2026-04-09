@@ -10,7 +10,7 @@ pkgs.buildNpmPackage rec {
     owner = "microsoft";
     repo = "azure-devops-mcp";
     rev = "v${version}";
-    hash = "sha256-iQwlcn2jIDBeLSfN1X8vEgo0knV3fWOCDpbcYwB0tqY=";
+    hash = "sha256-tIIPKjxAp5+rnl+WCfGaSlMt71A+v2Saq/E+pinBJqU=";
   };
 
   npmDeps = pkgs.importNpmLock {

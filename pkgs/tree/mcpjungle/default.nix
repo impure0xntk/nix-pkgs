@@ -11,7 +11,7 @@ pkgs.buildGoModule rec {
     owner = "mcpjungle";
     repo = "MCPJungle";
     tag = version;
-    hash = "sha256-wsysmD34s89PBZ++q6htc9jr6/ChX98ZQEYMlKWfG3I=";
+    hash = "sha256-bH3FVcVMs0LOPD6rDAGGz0wJApuyl7/PlCnUhH1Zhrw=";
   };
   vendorHash = "sha256-pvCDf7Y+LiIOiZ0O/bJMzkf75o7HQbYpF01yFY4J9Yg=";
 
