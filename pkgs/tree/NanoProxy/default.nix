@@ -17,6 +17,47 @@ pkgs.stdenv.mkDerivation (finalAttrs: rec {
     nodejs
   ];
 
+  patches = [(pkgs.writeText "404-html-handling" ''
+diff --git a/server.js b/server.js
+index 471ea58..23bd199 100644
+--- a/server.js
++++ b/server.js
+@@ -506,2 +506,25 @@ async function proxyRequest(req, res) {
+
++  // For 404 error handling with HTML
++  if (contentType.includes("text/html") && !req.url.includes("/health")) {
++    const htmlBody = await upstreamResponse.text();
++    console.error("[NanoProxy] Received HTML instead of JSON from upstream:");
++    console.error(`Status: ''${upstreamResponse.status}`);
++    console.error(htmlBody.substring(0, 500));
++
++    const errorPayload = {
++      error: {
++        code: upstreamResponse.status === 404 ? "model_not_found" : "upstream_html_response",
++        message: upstreamResponse.status === 404
++          ? "Model not found or endpoint does not exist. Check model ID."
++          : "Upstream returned HTML instead of JSON. Possible Cloudflare challenge or server error.",
++        upstream_status: upstreamResponse.status
++      }
++    };
++    const buf = Buffer.from(JSON.stringify(errorPayload), "utf8");
++    res.writeHead(upstreamResponse.status, { "content-type": "application/json; charset=utf-8", "content-length": String(buf.length) });
++    res.end(buf);
++    log(`--- HTML ERROR RESPONSE (status ''${upstreamResponse.status}) ---\n`);
++    return;
++  }
++
+   const rawBuffer = Buffer.from(await upstreamResponse.arrayBuffer());
+@@ -510,3 +533,4 @@ async function proxyRequest(req, res) {
+   res.end(rawBuffer);
+-  log(`--- PASSTHROUGH (status ''${upstreamResponse.status}) ---\n`);
++  log(`--- PASSTHROUGH (status ''${upstreamResponse.status}) ---\
++`);
+ }
+
+    '')
+  ];
+
   installPhase = ''
     runHook preInstall
 
