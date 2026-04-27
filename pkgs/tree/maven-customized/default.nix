@@ -9,7 +9,7 @@ let
   defaultMavenOptsStr = lib.concatStringsSep " " tunedJavaToolArgs;
 in (pkgs.symlinkJoin {
   name = prev.maven.pname + "-customized";
-  version = "3.9.9"; # depends on maven-mvnd version
+  version = "3.9.14"; # depends on maven-mvnd version
   paths = [ pkgs.mvnd.maven ];
   # -Dmaven.compiler.{fork,executable} for different javac.inherit
   # https://qiita.com/backpaper0@github/items/34b7bc4d531e083302b2
