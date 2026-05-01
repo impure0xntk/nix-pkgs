@@ -2,46 +2,94 @@
 {
   pkgs,
   lib,
+  buildUvPackage,
   ...
 }:
-pkgs.python3Packages.buildPythonApplication rec {
-  pname = "mcp-server-arxiv";
-  version = "0.3.2";
 
+let
+  pythonPkgs = pkgs.pure-unstable.python3Packages;
+  version = "0.4.12";
   src = pkgs.fetchFromGitHub {
     owner = "blazickjp";
     repo = "arxiv-mcp-server";
-    rev = "0065f5abb48f3eb4e011a130dd63fc52b381a1d2";
-    hash = "sha256-WuPsE5YFDArtnbTL4wISfacp0IXVNi89JMRmXuX9v1s=";
+    rev = "v${version}";
+    hash = "sha256-FkK3RsRsMzvyWTJ3opUsu6mA6qfptdIbr31nN0SPz4U=";
   };
+
+  arxiv = pythonPkgs.arxiv.overridePythonAttrs (old: {
+    nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pythonPkgs.pythonRelaxDepsHook ];
+    pythonRelaxDeps = [ "requests" ];
+  });
+
+  # https://github.com/ZarredFelicite/nixos/blob/ab82bb718753fc59f34e78af519d6eb5c1d1c4af/pkgs/python/pymupdf-layout/default.nix#L10
+  pymupdf-layout = let
+    layoutWheel = pkgs.fetchurl {
+      url = "https://files.pythonhosted.org/packages/a7/bd/3e049b359dd0c3a101ae915484b87ff73bfdedfb24a924e0a8e6783b33f3/pymupdf_layout-1.26.6-cp310-abi3-manylinux_2_28_x86_64.whl";
+      sha256 = "sha256-7o4r/tEtS2QhsnofiYN6wJ2Lw/eD95Zw2zl+wkYUvz0=";
+    };
+  in pythonPkgs.pymupdf.overridePythonAttrs (old: {
+    pname = "pymupdf-layout";
+    version = "1.26.6";
+
+    nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.pure-unstable.unzip ];
+    propagatedBuildInputs = (old.propagatedBuildInputs or []) ++ (with pythonPkgs; [
+      pyyaml
+      numpy
+      onnxruntime
+      networkx
+    ]);
+
+    postInstall = (old.postInstall or "") + ''
+      tmpdir="$(mktemp -d)"
+      unzip -q ${layoutWheel} -d "$tmpdir"
+      mkdir -p "$out/${pkgs.python3.sitePackages}/pymupdf"
+      cp -R "$tmpdir/pymupdf/layout" "$out/${pkgs.python3.sitePackages}/pymupdf/"
+      cp -f "$tmpdir/pymupdf/features.py" "$out/${pkgs.python3.sitePackages}/pymupdf/features.py"
+      cp -f "$tmpdir/pymupdf/_features.so" "$out/${pkgs.python3.sitePackages}/pymupdf/_features.so"
+    '';
+
+    # Upstream memory regression test is flaky under Nix/CI on Python 3.13.
+    # Keep checks enabled but skip this known non-deterministic case.
+    disabledTests = (old.disabledTests or []) ++ [ "test_2791" ];
+  }) ;
+
+in
+# Cannot build via uv
+# buildUvPackage {
+#   pname = "mcp-server-arxiv";
+#   inherit src;
+# }
+pythonPkgs.buildPythonApplication {
+  pname = "mcp-server-arxiv";
+  inherit version src;
 
   pyproject = true;
 
-  build-system = with pkgs.python3Packages; [
+  build-system = with pythonPkgs; [
     hatchling
   ];
 
   # Remove unused dependencies
   postPatch = ''
     substituteInPlace pyproject.toml \
-      --replace-fail '"black>=25.1.0",' "" \
-      --replace-fail '"pymupdf-layout>=1.26.6",' ""
+      --replace-fail '"black>=25.1.0",' ""
   '';
 
-  dependencies = with pkgs.python3Packages; [
+  dependencies = with pythonPkgs; [
     arxiv
     httpx
     python-dateutil
     pydantic
     mcp
-    pymupdf4llm
     aiohttp
     python-dotenv
     pydantic-settings
     aiofiles
     uvicorn
+    starlette
     sse-starlette
     anyio
+    pymupdf-layout
   ];
 
   # Disable tests for now - can enable once we know the test structure
