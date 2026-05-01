@@ -1,28 +1,35 @@
 {
   pkgs,
   lib,
+  buildUvPackage,
   ...
 }:
 let
-in
-pkgs.python3Packages.buildPythonApplication rec {
-  pname = "mcp-server-yfinance-narumi";
-  version = "0.6.0";
-
+  pythonPkgs = pkgs.pure-unstable.python3Packages;
+  version = "0.9.1";
   src = pkgs.fetchFromGitHub {
     owner = "narumiruna";
     repo = "yfinance-mcp";
     rev = "v${version}";
-    hash = "sha256-KxyrBqHCpNALCIObkORqlA2rOsgzT2Sy0gB5DJPAVQ0=";
+    hash = "sha256-pxDEXDxfOKC64aIo6v4BS6aAUsz9AX+d6E8aNw4Odbw=";
   };
+in
+# Cannot build via uv
+# buildUvPackage {
+#   pname = "mcp-server-yfinance-narumi";
+#   inherit src;
+# }
+pythonPkgs.buildPythonApplication {
+  pname = "mcp-server-yfinance-narumi";
+  inherit version src;
 
   pyproject = true;
 
-  build-system = with pkgs.python3Packages; [
+  build-system = with pythonPkgs; [
     hatchling
   ];
 
-  dependencies = with pkgs.python3Packages; [
+  dependencies = with pythonPkgs; [
     loguru
     mcp
     mplfinance
