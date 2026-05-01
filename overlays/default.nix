@@ -15,18 +15,14 @@ let
     inherit lib prev;
     pkgs = final;
   };
-  generalPackagesOverlay = import ./general-packages;
   javaPackagesOverlay = import ./java-packages.nix;
-  nodePackagesOverlay = import ./node-packages;
   pythonPackagesOverlay = import ./python-packages;
 
   customOverlays = [
     pureOverlay
 
     my
-    generalPackagesOverlay
     javaPackagesOverlay
-    nodePackagesOverlay
     (pythonPackagesOverlay {
       uv2nix = inputs.uv2nix;
       pyproject-nix = inputs.pyproject-nix;
