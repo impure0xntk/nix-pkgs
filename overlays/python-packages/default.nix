@@ -50,6 +50,10 @@ final: prev:
             "tests/test_pytest_plugin.py"
           ];
         });
+        # TODO: remove after 26.05
+        curl-cffi = pysuper.curl-cffi.overridePythonAttrs (pythonPrev: {
+          doCheck = false;
+        });
       })
   ];
   python3 = let self = prev.python3.override {
