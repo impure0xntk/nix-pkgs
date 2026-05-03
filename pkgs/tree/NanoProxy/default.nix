@@ -17,7 +17,8 @@ pkgs.stdenv.mkDerivation (finalAttrs: rec {
     nodejs
   ];
 
-  patches = [(pkgs.writeText "404-html-handling" ''
+  patches = [
+    (pkgs.writeText "404-html-handling" ''
 diff --git a/server.js b/server.js
 index 471ea58..23bd199 100644
 --- a/server.js
@@ -53,8 +54,23 @@ index 471ea58..23bd199 100644
 -  log(`--- PASSTHROUGH (status ''${upstreamResponse.status}) ---\n`);
 +  log(`--- PASSTHROUGH (status ''${upstreamResponse.status}) ---\
 +`);
- }
-
+  }
+    '')
+    (pkgs.writeText "model-sanitize-server" ''
+--- a/server.js
++++ b/server.js
+@@ -331,3 +331,3 @@
+-          if (payload.model) model = payload.model;
++          if (payload.model) { model = String(payload.model).split('\\n')[0].trim(); }
+           if (payload.created) created = payload.created;
+    '')
+    (pkgs.writeText "model-sanitize-core" ''
+--- a/src/core.js
++++ b/src/core.js
+@@ -497,3 +497,3 @@
+-    model: payload && payload.model,
++    model: payload && payload.model ? String(payload.model).split('\\n')[0].trim() : undefined,
+     created: payload && payload.created,
     '')
   ];
 
@@ -72,7 +88,7 @@ index 471ea58..23bd199 100644
   '';
 
   meta = {
-    description = "A local proxy for OpenCode and similar OpenAI-compatible coding clients that works around NanoGPT’s often unreliable native tool calling. Instead of relying on NanoGPT to return proper tool calls directly, it sends a stricter text-based tool format upstream and converts that back into normal OpenAI-style tool calls for the client.";
+    description = "A local proxy for OpenCode and similar OpenAI-compatible coding clients that works around NanoGPT's often unreliable native tool calling. Instead of relying on NanoGPT to return proper tool calls directly, it sends a stricter text-based tool format upstream and converts that back into normal OpenAI-style tool calls for the client.";
     homepage = "https://github.com/nanogpt-community/NanoProxy";
     license = lib.licenses.mit;
     mainProgram = "nanoproxy";
