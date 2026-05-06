@@ -7,7 +7,7 @@
 }:
 
 let
-  pythonPkgs = pkgs.pure-unstable.python3Packages;
+  pythonPkgs = pkgs.unstable.python3Packages;
   version = "0.4.12";
   src = pkgs.fetchFromGitHub {
     owner = "blazickjp";
@@ -31,7 +31,7 @@ let
     pname = "pymupdf-layout";
     version = "1.26.6";
 
-    nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.pure-unstable.unzip ];
+    nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.unzip ];
     propagatedBuildInputs = (old.propagatedBuildInputs or []) ++ (with pythonPkgs; [
       pyyaml
       numpy

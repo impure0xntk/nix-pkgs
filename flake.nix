@@ -37,37 +37,59 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       flake-utils,
       nix-lib,
       ...
     }@inputs:
     let
-      # Inspire: https://github.com/tiredofit/home/blob/main/flake.nix
       pkgsPath = ./pkgs;
-      # in flake-utils.lib.eachDefaultSystem (system:
-    in
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        lib = nix-lib.lib.${system};
-        overlays = import ./overlays {
-          inherit inputs system pkgsPath lib;
-        };
-      in
-      {
-        # TODO: add overlays.<name> for each overlay.
+      systems = [ "x86_64-linux" "aarch64-linux" ];
 
-        # overlays.default = final: prev: ...
-        pkgsOverlay = overlays;
+      mkSystemOutputs = system:
+        let
+          lib = nix-lib.lib.${system};
 
-        checks.pkgs-test = import ./tests {
-          inherit lib;
-          pkgs = import nixpkgs {
+          purePkgs = import nixpkgs {
             inherit system;
-            overlays = overlays;
             config.allowUnfree = true;
           };
+
+          unstablePkgs = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+
+          myOverlays = import ./overlays {
+            inherit inputs system pkgsPath lib;
+          };
+
+          myPkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = myOverlays;
+          };
+        in
+        {
+          packages = {
+            pure = purePkgs;
+            unstable = unstablePkgs;
+            my = myPkgs.my;
+          };
+          overlays = myOverlays;
+          checks.pkgs-test = import ./tests {
+            inherit lib;
+            pkgs = myPkgs;
+          };
         };
-      }
-    );
+
+      systemOutputs = nixpkgs.lib.genAttrs systems mkSystemOutputs;
+    in
+    {
+      packages = nixpkgs.lib.genAttrs systems (system: systemOutputs.${system}.packages);
+
+      overlays = nixpkgs.lib.genAttrs systems (system: systemOutputs.${system}.overlays);
+
+      checks = nixpkgs.lib.genAttrs systems (system: systemOutputs.${system}.checks);
+    };
 }

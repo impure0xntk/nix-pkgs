@@ -1,11 +1,10 @@
 {
   pkgs,
   lib,
-  buildUvPackage,
   ...
 }:
 let
-  pythonPkgs = pkgs.pure-unstable.python3Packages;
+  pythonPkgs = pkgs.unstable.python3Packages;
   version = "0.9.1";
   src = pkgs.fetchFromGitHub {
     owner = "narumiruna";
@@ -14,11 +13,6 @@ let
     hash = "sha256-pxDEXDxfOKC64aIo6v4BS6aAUsz9AX+d6E8aNw4Odbw=";
   };
 in
-# Cannot build via uv
-# buildUvPackage {
-#   pname = "mcp-server-yfinance-narumi";
-#   inherit src;
-# }
 pythonPkgs.buildPythonApplication {
   pname = "mcp-server-yfinance-narumi";
   inherit version src;

@@ -1,6 +1,6 @@
 { pkgs, lib, additionalDeps ? [], ... }:
 let
-  pythonPkgs = pkgs.pure-unstable.python3Packages;
+  pythonPkgs = pkgs.unstable.python3Packages;
 
   pname = "fish-ai";
   version = "2.11.1";

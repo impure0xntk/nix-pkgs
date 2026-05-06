@@ -3,14 +3,14 @@
 { pkgs, lib, prev,
   jdk_headless,
   compileJdk ? jdk_headless,
-  tunedJavaToolArgs,
+  tunedJavaToolArgs ? [],
   ... }:
 let
   defaultMavenOptsStr = lib.concatStringsSep " " tunedJavaToolArgs;
 in (pkgs.symlinkJoin {
   name = prev.maven.pname + "-customized";
   version = "3.9.14"; # depends on maven-mvnd version
-  paths = [ pkgs.mvnd.maven ];
+  paths = [ pkgs.my.mvnd.maven ];
   # -Dmaven.compiler.{fork,executable} for different javac.inherit
   # https://qiita.com/backpaper0@github/items/34b7bc4d531e083302b2
   # https://stackoverflow.com/a/36647171

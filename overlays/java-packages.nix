@@ -1,18 +1,5 @@
 # TODO: consider to move to work package.
 final: prev: rec {
-  # TODO: replace to zulu25 after releasing NixOS 25.05
-  jdk = prev.zuluLTS.overrideAttrs (old: {
-    meta.priority = 10; # low
-  });
-  zulu = final.zuluLTS;
-
-  defaultJDK = jdk;
-  jdk_headless = jdk.overrideAttrs (_: {
-    meta.platforms = final.lib.platforms.linux;
-  });
-  jre = jdk;
-  jre_minimal = jdk;
-
   tunedJavaArgs = [
     "-XX:+UseStringDeduplication"
     "-XX:+UseZGC" # "-XX:+ZGenerational" is the default.

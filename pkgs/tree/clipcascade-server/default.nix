@@ -15,7 +15,7 @@ pkgs.maven.buildMavenPackage rec {
   mvnJdk = jre21;
   mvnHash = "sha256-iN720c0H00YBw0r9YP61Gc1U2zyq44kojovju2gXREQ=";
 
-  nativeBuildInputs = with pkgs;[ makeWrapper ];
+  nativeBuildInputs = with pkgs; [ makeWrapper ];
 
   patches = [
     ./host-address.patch

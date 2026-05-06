@@ -5,7 +5,7 @@
   ...
 }:
 let
-  package = pkgs.pure-unstable.buildGo126Module (self: rec {
+  package = pkgs.unstable.buildGo126Module (self: rec {
     pname = "mcp-server-devtools";
     version = "0.59.31";
 

@@ -1,6 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, pkgs-unstable, ... }:
 let
-  python = pkgs.pure-unstable;
+  python = pkgs-unstable;
 in
 python.python3Packages.buildPythonPackage rec {
   pname = "headroom-ai";
@@ -44,7 +44,7 @@ python.python3Packages.buildPythonPackage rec {
     # code
     tree-sitter-language-pack
   ] ++ [
-    pkgs.pure-unstable.ast-grep # instead of ast-grep-cli
+    pkgs-unstable.ast-grep # instead of ast-grep-cli
   ];
 
   postPatch = ''

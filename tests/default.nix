@@ -1,6 +1,6 @@
 { pkgs, lib, }:
 
-with pkgs;
+with pkgs.my;
 
 let
   packages = [

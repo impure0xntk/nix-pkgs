@@ -1,32 +1,36 @@
 # Inspire: https://github.com/tiredofit/home/blob/main/overlays/default.nix
 {inputs, system, lib, pkgsPath, ...}:
 let
-  pureOverlay = final: prev: {
-    pure = import inputs.nixpkgs {
-      inherit system;
+  myOverlay = final: prev:
+  let
+    # Unstable packages for Python and other cutting-edge needs
+    unstable = import inputs.nixpkgs-unstable {
+      inherit (final) system;
       config.allowUnfree = true;
     };
-    pure-unstable = import inputs.nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  };
-  my = final: prev: import pkgsPath {
-    inherit lib prev;
-    pkgs = final;
-  };
-  javaPackagesOverlay = import ./java-packages.nix;
-  pythonPackagesOverlay = import ./python-packages;
+  in {
+    my = let
+      # Java packages (jdk, zulu, etc.)
+      javaPkgs = (import ./java-packages.nix) final prev;
 
-  customOverlays = [
-    pureOverlay
+      # Python overlay configuration
+      pythonOverlayFunc = (import ./python-packages {
+        uv2nix = inputs.uv2nix;
+        pyproject-nix = inputs.pyproject-nix;
+        pyproject-build-systems = inputs.pyproject-build-systems;
+      });
+      pythonOverlayResult = pythonOverlayFunc final prev;
 
-    my
-    javaPackagesOverlay
-    (pythonPackagesOverlay {
-      uv2nix = inputs.uv2nix;
-      pyproject-nix = inputs.pyproject-nix;
-      pyproject-build-systems = inputs.pyproject-build-systems;
-    })
-  ];
-in customOverlays
+      # Apply python overlay to pkgs so treePkgs uses overlaid python
+      pkgsWithOverlays = final // javaPkgs // pythonOverlayResult;
+      # Tree packages with access to overlaid pkgs, unstable, and other attributes
+      treePkgs = import pkgsPath {
+        inherit lib prev;
+        pkgs = pkgsWithOverlays;
+        pkgs-unstable = unstable;
+      };
+    in
+      treePkgs // javaPkgs;
+    inherit unstable;
+  };
+in [ myOverlay ]
