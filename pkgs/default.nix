@@ -4,7 +4,7 @@
 # Ref:
 #   https://github.com/NixOS/nixpkgs/blob/master/pkgs/top-level/all-packages.nix
 #
-attrs@{pkgs, lib, pkgs-unstable ? null, ...}:
+attrs@{pkgs, lib, ...}:
 let
   args = import ./top-level attrs;
 
@@ -17,7 +17,6 @@ let
     in packages;
 
   # Build tree packages with access to unstable and pythonOverlay
-  treeArgs = args // (lib.optionalAttrs (pkgs-unstable != null) { inherit pkgs-unstable; });
-  treePkgs = genOverlayPackages ./tree pkgs treeArgs;
+  treePkgs = genOverlayPackages ./tree pkgs args;
 in
   treePkgs

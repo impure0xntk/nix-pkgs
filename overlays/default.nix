@@ -27,7 +27,6 @@ let
       treePkgs = import pkgsPath {
         inherit lib prev;
         pkgs = pkgsWithOverlays;
-        pkgs-unstable = unstable;
       };
     in
       treePkgs // javaPkgs;

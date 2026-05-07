@@ -1,6 +1,6 @@
-{ pkgs, lib, pkgs-unstable, ... }:
+{ pkgs, lib, ... }:
 let
-  python = pkgs-unstable;
+  python = pkgs.unstable;
 in
 python.python3Packages.buildPythonPackage rec {
   pname = "headroom-ai";
