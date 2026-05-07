@@ -44,7 +44,7 @@ python.python3Packages.buildPythonPackage rec {
     # code
     tree-sitter-language-pack
   ] ++ [
-    pkgs-unstable.ast-grep # instead of ast-grep-cli
+    pkgs.unstable.ast-grep # instead of ast-grep-cli
   ];
 
   postPatch = ''
