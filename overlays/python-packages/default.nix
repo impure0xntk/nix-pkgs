@@ -43,17 +43,6 @@ final: prev:
       in {
         # Not used, just keep for python overlay examples.
         # mcp = import ./mcp args;
-
-        # TODO: remove after 26.05
-        inline-snapshot = pysuper.inline-snapshot.overridePythonAttrs (pythonPrev: {
-          disabledTestPaths = (pythonPrev.disabledTestPaths or []) ++ [
-            "tests/test_pytest_plugin.py"
-          ];
-        });
-        # TODO: remove after 26.05
-        curl-cffi = pysuper.curl-cffi.overridePythonAttrs (pythonPrev: {
-          doCheck = false;
-        });
       })
   ];
   python3 = let self = prev.python3.override {
