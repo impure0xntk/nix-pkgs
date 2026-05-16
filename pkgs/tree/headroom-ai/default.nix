@@ -1,61 +1,28 @@
 { pkgs, lib, ... }:
-let
-  python = pkgs.unstable;
-in
-python.python3Packages.buildPythonPackage rec {
+pkgs.unstable.rustPlatform.buildRustPackage rec {
   pname = "headroom-ai";
-  version = "0.14.1";
-  pyproject = true;
+  version = "0.21.38";
 
-  src = python.fetchPypi {
-    pname = "headroom_ai";
-    inherit version;
-    hash = "sha256-UL2ATzDr2WuRUALgqzaGIrkV9xxBI2OYSHkzd3kmaLw=";
+  src = pkgs.fetchFromGitHub {
+    owner = "chopratejas";
+    repo = "headroom";
+    rev = "v${version}";
+    hash = "sha256-zJRtmkrrg+ZcGpMQEybVeXlOIu7knrnkqoNyyZL6tRY=";
   };
 
-  nativeBuildInputs = with python.python3Packages; [
-    hatchling
-  ];
+  cargoHash = "sha256-WQBvil0bsS6/Z6b+uRauwOQq4VZ57VwAoghcyFdVgLE=";
 
-  propagatedBuildInputs = with python.python3Packages; [
-    tiktoken
-    pydantic
-    litellm
-    click
-    rich
-    opentelemetry-api
-    # ast-grep-cli -> ast-grep binary
-    tomli
-
-    # proxy
-    fastapi
-    uvicorn
-    httpx
-    h2 # for http2 by httpx
-    openai
-    mcp
-    magika
-    zstandard
-    websockets
+  buildInputs = with pkgs.unstable; [
     onnxruntime
-    transformers
-    watchdog
-
-    # code
-    tree-sitter-language-pack
-  ] ++ [
-    pkgs.unstable.ast-grep # instead of ast-grep-cli
   ];
+  env = {
+    ORT_STRATEGY = "system";
+    ORT_PREFER_DYNAMIC_LINK = "1";
+    ORT_LIB_LOCATION = "${pkgs.unstable.onnxruntime}";
+    ORT_INCLUDE_LOCATION = "${pkgs.unstable.onnxruntime.dev}/include";
+  };
 
-  postPatch = ''
-    substituteInPlace pyproject.toml \
-      --replace-fail '"ast-grep-cli>=0.30.0",' "" \
-      --replace-fail '"litellm==1.82.3",' '"litellm>=1.82.3",'
-  '';
-
-  doCheck = false;
-
-  meta = with python.lib; {
+  meta = with lib; {
     description = "Context optimization layer for LLM applications";
     homepage = "https://github.com/chopratejas/headroom";
     license = licenses.asl20;
