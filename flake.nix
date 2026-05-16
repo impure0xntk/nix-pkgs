@@ -50,16 +50,6 @@
         let
           lib = nix-lib.lib.${system};
 
-          purePkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-
-          unstablePkgs = import nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-          };
-
           myOverlays = import ./overlays {
             inherit inputs system pkgsPath lib;
           };
@@ -67,15 +57,10 @@
           myPkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
-            overlays = myOverlays;
+            overlays = [ myOverlays ];
           };
         in
         {
-          packages = {
-            pure = purePkgs;
-            unstable = unstablePkgs;
-            my = myPkgs.my;
-          };
           overlays = myOverlays;
           checks.pkgs-test = import ./tests {
             inherit lib;
@@ -84,10 +69,7 @@
         };
 
       systemOutputs = nixpkgs.lib.genAttrs systems mkSystemOutputs;
-    in
-    {
-      packages = nixpkgs.lib.genAttrs systems (system: systemOutputs.${system}.packages);
-
+    in {
       overlays = nixpkgs.lib.genAttrs systems (system: systemOutputs.${system}.overlays);
 
       checks = nixpkgs.lib.genAttrs systems (system: systemOutputs.${system}.checks);

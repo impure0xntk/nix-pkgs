@@ -32,4 +32,4 @@ let
       treePkgs // javaPkgs;
     inherit unstable;
   };
-in [ myOverlay ]
+in myOverlay

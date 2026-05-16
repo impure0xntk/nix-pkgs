@@ -1,15 +1,12 @@
 { pkgs, lib, }:
 
-with pkgs.my;
-
 let
-  packages = [
-    jetbrains.gateway
-    mvnd.maven
+  packages = with pkgs.my; [
+    cspell-dict-cspell-bundle
   ];
 in
-runCommand "overlay-test" {
-  nativeBuildInputs = [ coreutils ];
+pkgs.runCommand "overlay-test" {
+  nativeBuildInputs = [ pkgs.coreutils ];
 } ''
   set -x
   ${lib.concatMapStringsSep "\n" (p: ''echo "${p}" >> $out'') packages}
