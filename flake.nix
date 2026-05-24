@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:Nixos/nixpkgs/release-25.05";
+    nixpkgs.url = "github:Nixos/nixpkgs/release-25.11";
     nixpkgs-unstable.url = "github:Nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -22,6 +22,11 @@
         uv2nix.follows = "uv2nix";
         nixpkgs.follows = "nixpkgs";
       };
+    };
+
+    bun2nix = {
+      url = "github:nix-community/bun2nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nix-lib = {
