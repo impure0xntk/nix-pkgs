@@ -1,13 +1,20 @@
-# If fails to install, try to update flake for root project
+# To pin bun.nix, use specific version: not pkgs.unstable.codebook.version
 {pkgs, lib, ...}:
 let
-  codebook = pkgs.unstable.codebook;
+  version = "0.3.40";
+  src = pkgs.fetchFromGitHub {
+    owner = "blopker";
+    repo = "codebook";
+    rev = "v${version}";
+    hash = "sha256-+tjUqo5NO1cVMW2x7eKBw8PpPVvCtURCX/+pHKWT9Z4=";
+  };
 
   vsix = pkgs.stdenv.mkDerivation (finalAttrs: {
-    pname = "codebook-vscode-${finalAttrs.version}-vsix";
-    inherit (codebook) version;
+    name = "codebook-vscode-${finalAttrs.version}.vsix";
+    pname = "codebook-vscode-vsix";
+    inherit version;
 
-    src = "${codebook.src}/editors/vscode";
+    src = "${src}/editors/vscode";
 
     nativeBuildInputs = with pkgs; [
       nodejs
@@ -19,12 +26,8 @@ let
       bun2nix.hook
     ];
     bunDeps = pkgs.bun2nix.fetchBunDeps {
-      bunNix = "${
-        pkgs.runCommand "bun-nix" { } ''
-          mkdir $out
-          ${lib.getExe pkgs.bun2nix} -l ${finalAttrs.src}/bun.lock -o $out/bun.nix
-        ''
-      }/bun.nix";
+      # Use static pinning: cannot build if uses dynamic such as runCommand.
+      bunNix = ./bun.nix;
     };
 
     strictDeps = true;
