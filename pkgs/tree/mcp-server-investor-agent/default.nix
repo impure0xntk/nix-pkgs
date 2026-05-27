@@ -14,16 +14,17 @@ pkgs.stdenv.mkDerivation rec {
     hash = "sha256-1GhKWI/3CLw3U7NLM+jRdJNGtmPqTYhCNzInmiCYBQQ=";
   };
 
-  pnpmDeps = pkgs.pnpm.fetchDeps {
+  pnpmDeps = pkgs.fetchPnpmDeps {
     inherit pname version src;
-    fetcherVersion = 1;
-    hash = "sha256-AQtTarIvzB1t7L0eingDJE+vfY5H3/lrFj4DGk0lvms=";
+    fetcherVersion = 3;
+    hash = "sha256-cG1NsbHyezqn6yEL8p5/w/4Sbtfo19/5W/ziEANbOKo=";
   };
 
-  nativeBuildInputs = [
-    pkgs.nodejs
-    pkgs.pnpm.configHook
-    pkgs.typescript
+  nativeBuildInputs = with pkgs; [
+    nodejs
+    pnpm
+    pnpmConfigHook
+    typescript
   ];
 
   buildPhase = ''
