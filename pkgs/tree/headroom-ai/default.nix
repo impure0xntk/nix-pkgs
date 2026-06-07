@@ -1,13 +1,13 @@
 { pkgs, lib, ... }:
 pkgs.unstable.rustPlatform.buildRustPackage rec {
   pname = "headroom-ai";
-  version = "0.22.2";
+  version = "0.23.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "chopratejas";
     repo = "headroom";
     rev = "v${version}";
-    hash = "sha256-D8lSYWKQs0FfuDCC5yapj9+XI8o8B6xuu5Uh1J/8GTw=";
+    hash = "sha256-4pQUSi8dU85tm5WY8Z/ZEN8O/ccGDDVIC3SnNBvUZTY=";
   };
 
   cargoHash = "sha256-WQBvil0bsS6/Z6b+uRauwOQq4VZ57VwAoghcyFdVgLE=";
