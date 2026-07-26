@@ -38,7 +38,7 @@ let
       onnxruntime
       networkx
     ]);
-
+    
     postInstall = (old.postInstall or "") + ''
       tmpdir="$(mktemp -d)"
       unzip -q ${layoutWheel} -d "$tmpdir"
@@ -46,6 +46,10 @@ let
       cp -R "$tmpdir/pymupdf/layout" "$out/${pkgs.python3.sitePackages}/pymupdf/"
       cp -f "$tmpdir/pymupdf/features.py" "$out/${pkgs.python3.sitePackages}/pymupdf/features.py"
       cp -f "$tmpdir/pymupdf/_features.so" "$out/${pkgs.python3.sitePackages}/pymupdf/_features.so"
+      
+      cp -R \
+        "$tmpdir"/pymupdf_layout-*.dist-info \
+        "$out/${pythonPkgs.python.sitePackages}/"
     '';
 
     # Upstream memory regression test is flaky under Nix/CI on Python 3.13.
