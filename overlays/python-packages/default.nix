@@ -43,11 +43,6 @@ final: prev:
       in {
         # Not used, just keep for python overlay examples.
         # mcp = import ./mcp args;
-
-        # For litellm and others
-        aiohttp = pysuper.aiohttp.overridePythonAttrs (oldAttrs: {
-          doCheck = false; # "test_secure_https_proxy_absolute_path" fail workaround
-        });
       })
   ];
   python3 = let self = prev.python3.override {
