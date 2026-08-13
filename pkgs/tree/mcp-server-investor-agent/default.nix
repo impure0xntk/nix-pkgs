@@ -17,7 +17,7 @@ pkgs.stdenv.mkDerivation rec {
   pnpmDeps = pkgs.fetchPnpmDeps {
     inherit pname version src;
     fetcherVersion = 3;
-    hash = "sha256-cG1NsbHyezqn6yEL8p5/w/4Sbtfo19/5W/ziEANbOKo=";
+    hash = "sha256-Aoscc36I8f9JdkuwBfkfHkOTo1V01Ybx3mgos55kQPM=";
   };
 
   nativeBuildInputs = with pkgs; [
