@@ -10,8 +10,8 @@ pkgs.stdenv.mkDerivation rec {
   src = pkgs.fetchFromGitHub {
     owner = "ferdousbhai";
     repo = "investor-agent";
-    rev = "2a71d057da2a03f5bf971331d76dad32bd4c5ab5"; # 2026-05-04
-    hash = "sha256-1GhKWI/3CLw3U7NLM+jRdJNGtmPqTYhCNzInmiCYBQQ=";
+    rev = "53286e701e442eb623f5acd6eaa451d8b1f3396d"; # 2026-08-16
+    hash = "sha256-PcVIQ2Mm822+DMBT6Y3o8E8gvy/YddeL4cG0MYDPOGc=";
   };
 
   pnpmDeps = pkgs.fetchPnpmDeps {
