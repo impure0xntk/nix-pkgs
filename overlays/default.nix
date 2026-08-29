@@ -3,11 +3,15 @@
 let
   myOverlay = final: prev:
   let
-    # Unstable packages for Python and other cutting-edge needs
-    unstable = import inputs.nixpkgs-unstable {
+    purePkgsOptions = {
       inherit (final) system;
       config.allowUnfree = true;
     };
+
+    # stable/unstable uses to avoid unnecessary python build
+    stable = import inputs.nixpkgs purePkgsOptions;
+    unstable = import inputs.nixpkgs-unstable purePkgsOptions;
+
     bun2nixOverlayResult = inputs.bun2nix.overlays.default final prev;
   in {
     my = let
@@ -33,7 +37,7 @@ let
       };
     in
       treePkgs // javaPkgs;
-    inherit unstable;
+    inherit stable unstable;
   }
   // bun2nixOverlayResult;
 in myOverlay
