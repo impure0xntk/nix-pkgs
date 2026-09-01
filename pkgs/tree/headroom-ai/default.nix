@@ -7,7 +7,7 @@ pkgs.unstable.rustPlatform.buildRustPackage rec {
     owner = "chopratejas";
     repo = "headroom";
     rev = "v${version}";
-    hash = "sha256-U6aJV4iyISxGg+lX6jhuSSMONW7XjzpRus4e9rXknTM=";
+    hash = "sha256-89Tkzx56QIZWfNWLaiPdMynZGOLPr5EAP5RnLSgvBsA=";
   };
 
   cargoHash = "sha256-iEvap6uLsAqCSv+l/S7K7osxL+yV7Y8pE6Dhaqt2AIA=";
