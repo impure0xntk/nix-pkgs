@@ -10,14 +10,14 @@ pkgs.stdenv.mkDerivation rec {
   src = pkgs.fetchFromGitHub {
     owner = "ferdousbhai";
     repo = "investor-agent";
-    rev = "53286e701e442eb623f5acd6eaa451d8b1f3396d"; # 2026-08-16
-    hash = "sha256-PcVIQ2Mm822+DMBT6Y3o8E8gvy/YddeL4cG0MYDPOGc=";
+    rev = "7ab5a9ab0522e9427077024c4be42b8f076398e3"; # 2026-09-02
+    hash = "sha256-h8qSF8qHDssrZafQFY7WbOhOww54sa5eswyHaz91RdI=";
   };
 
   pnpmDeps = pkgs.fetchPnpmDeps {
     inherit pname version src;
-    fetcherVersion = 3;
-    hash = "sha256-Aoscc36I8f9JdkuwBfkfHkOTo1V01Ybx3mgos55kQPM=";
+    fetcherVersion = 4;
+    hash = "sha256-YNCtrikHE/q00oXicB9ZIlP1ZsRNv1/gJKsFpfZOU3Y=";
   };
 
   nativeBuildInputs = with pkgs; [
