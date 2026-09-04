@@ -7,15 +7,15 @@
 let
   package = pkgs.unstable.buildGo126Module (self: rec {
     pname = "mcp-server-devtools";
-    version = "0.59.31";
+    version = "0.59.103";
 
     src = pkgs.fetchFromGitHub {
       owner = "sammcj";
       repo = "mcp-devtools";
       tag = "v${version}";
-      hash = "sha256-zd+RBiZP1QnmH3XWzMpNta9RV1apy7V+7MvNUokm28s=";
+      hash = "sha256-xU37lRkJylDITjLhbv/uk8FpasrzmU3S5TsHlTVeczA=";
     };
-    vendorHash = "sha256-fvCY57PsUZw07zbqxHbBj60tYtULC1AtJDzYDmAQ/wA=";
+    vendorHash = "sha256-otGqLPvQ5L6fhdOYXUE1JXeCKuvBGKBlOVSjEozoYk4=";
 
     # tests/benchmarks build failure workaround
     preBuild = ''
