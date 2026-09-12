@@ -5,17 +5,17 @@
   ...
 }:
 let
-  package = pkgs.unstable.buildGo126Module (self: rec {
+  package = pkgs.unstable.buildGo127Module (self: rec {
     pname = "mcp-server-devtools";
-    version = "0.59.103";
+    version = "0.59.106";
 
     src = pkgs.fetchFromGitHub {
       owner = "sammcj";
       repo = "mcp-devtools";
       tag = "v${version}";
-      hash = "sha256-xU37lRkJylDITjLhbv/uk8FpasrzmU3S5TsHlTVeczA=";
+      hash = "sha256-4a/V4RCfm8Q9Y97jTkDMfeU2JKEAMFcn+2e5UdsFJNo=";
     };
-    vendorHash = "sha256-otGqLPvQ5L6fhdOYXUE1JXeCKuvBGKBlOVSjEozoYk4=";
+    vendorHash = "sha256-kwikVBVLFiFIfsCViAycgoKgV20Z4M2LJszXNYXk8Q4=";
 
     # tests/benchmarks build failure workaround
     preBuild = ''
