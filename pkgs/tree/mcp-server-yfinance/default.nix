@@ -5,12 +5,12 @@
 }:
 let
   pythonPkgs = pkgs.unstable.python3Packages;
-  version = "0.9.1";
+  version = "0.14.0";
   src = pkgs.fetchFromGitHub {
     owner = "narumiruna";
     repo = "yfinance-mcp";
     rev = "v${version}";
-    hash = "sha256-pxDEXDxfOKC64aIo6v4BS6aAUsz9AX+d6E8aNw4Odbw=";
+    hash = "sha256-egR1koZgCnE5pOKrZEgiMg6CJwmkLQz/OXnkLeVE4Yg=";
   };
 in
 pythonPkgs.buildPythonApplication {
@@ -19,16 +19,25 @@ pythonPkgs.buildPythonApplication {
 
   pyproject = true;
 
+  nativeBuildInputs = with pythonPkgs; [
+    pythonRelaxDepsHook
+  ];
+
   build-system = with pythonPkgs; [
     hatchling
   ];
 
   dependencies = with pythonPkgs; [
     loguru
+    matplotlib
     mcp
-    mplfinance
     tabulate
     yfinance
+  ];
+
+  pythonRelaxDeps = [
+    "yfinance"
+    "tabulate"
   ];
 
   # Disable tests for now - can enable once we know the test structure

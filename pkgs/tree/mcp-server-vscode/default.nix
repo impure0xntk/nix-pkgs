@@ -6,14 +6,15 @@
   lib,
   ...
 }:
+
 pkgs.buildNpmPackage rec {
   pname = "mcp-server-vscode";
-  version = "0.3.0";
+  version = "0.4.0";
   src = pkgs.fetchFromGitHub {
     owner = "juehang";
     repo = "vscode-mcp-server";
     rev = version;
-    hash = "sha256-rYsJ9af5a4spbkXVQk7PL4agG13eEUXtf9J8H0oGvhA=";
+    hash = "sha256-WphLeOx3EswirF0WYvqNj50OrC1It/U4xEKnm40ql6w=";
   };
 
   # Edit modelcontextprotocol/inspector information: cannot use resolved url as git+ssh://...

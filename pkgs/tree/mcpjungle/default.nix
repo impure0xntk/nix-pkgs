@@ -6,14 +6,19 @@
 }:
 pkgs.buildGoModule rec {
   pname = "mcpjungle";
-  version = "0.3.6";
+  version = "0.4.6";
   src = pkgs.fetchFromGitHub {
     owner = "mcpjungle";
     repo = "MCPJungle";
     tag = version;
-    hash = "sha256-bH3FVcVMs0LOPD6rDAGGz0wJApuyl7/PlCnUhH1Zhrw=";
+    hash = "sha256-XzszhbkQENeUgOOVBw7dsqZWR7hU3yLYOAclf3E9gy8=";
   };
-  vendorHash = "sha256-pvCDf7Y+LiIOiZ0O/bJMzkf75o7HQbYpF01yFY4J9Yg=";
+  vendorHash = "sha256-3uatBXXdQzqGuhFuLkpmoMkYYqUMt1dFqm7vuazMLqs=";
+
+  preBuild = ''
+    mkdir -p internal/dashboardui/dist
+    touch internal/dashboardui/dist/index.html
+  '';
 
   doCheck = false; # "FAIL: TestResolveTargetDirForExport" workaround
 
