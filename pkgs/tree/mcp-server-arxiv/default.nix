@@ -8,12 +8,12 @@
 
 let
   pythonPkgs = pkgs.unstable.python3Packages;
-  version = "0.4.12";
+  version = "0.7.2";
   src = pkgs.fetchFromGitHub {
     owner = "blazickjp";
     repo = "arxiv-mcp-server";
     rev = "v${version}";
-    hash = "sha256-FkK3RsRsMzvyWTJ3opUsu6mA6qfptdIbr31nN0SPz4U=";
+    hash = "sha256-XmnuFtuzzTk6UppfU8c6RW9wMuPbMMSAu9sVEfAK0zM=";
   };
 
   arxiv = pythonPkgs.arxiv.overridePythonAttrs (old: {
@@ -72,12 +72,6 @@ pythonPkgs.buildPythonApplication {
   build-system = with pythonPkgs; [
     hatchling
   ];
-
-  # Remove unused dependencies
-  postPatch = ''
-    substituteInPlace pyproject.toml \
-      --replace-fail '"black>=25.1.0",' ""
-  '';
 
   dependencies = with pythonPkgs; [
     arxiv

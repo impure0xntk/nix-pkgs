@@ -1,44 +1,49 @@
-# https://github.com/timblaktu/mcp-servers-nix/blob/6bd16cd70225afeb6278b2489b79d2f356b9acd2/pkgs/official/mcp-nixos/default.nix
-{
-  pkgs,
-  lib,
-  ...
-}:
-pkgs.python3Packages.buildPythonApplication rec {
-  pname = "mcp-server-excel";
-  version = "0.1.7";
+{ pkgs, lib, ... }:
+
+let
+  pythonPkgs = pkgs.python3Packages;
+  version = "0.1.8";
 
   src = pkgs.fetchFromGitHub {
     owner = "haris-musa";
     repo = "excel-mcp-server";
     rev = "v${version}";
-    hash = "sha256-pXMC+yLFFjhYlDy7zm9SdFzPTubmxvNXIqtPuBmtdJc=";
+    hash = "sha256-F3QIAZWbuyE2Yl3e88HD9CZvkBpeMJI/Lm6uXuUgWKg=";
   };
+in
+pythonPkgs.buildPythonApplication {
+  pname = "mcp-server-excel";
+  inherit version src;
 
   pyproject = true;
 
-  patches = [
-    ./patch-excel-mcp-log
-  ];
-
-  build-system = with pkgs.python3Packages; [
+  build-system = with pythonPkgs; [
     hatchling
   ];
 
-  dependencies = with pkgs.python3Packages; [
+  dependencies = with pythonPkgs; [
+    loguru
+    mcp
     fastmcp
     openpyxl
+    pandas
+    python-dotenv
     typer
   ];
+
+  # Patch pyproject.toml to accept fastmcp 3.x
+  postPatch = ''
+    substituteInPlace pyproject.toml \
+      --replace 'fastmcp>=2.0.0,<3.0.0' 'fastmcp>=2.0.0'
+  '';
 
   # Disable tests for now - can enable once we know the test structure
   doCheck = false;
 
   meta = {
-    description = "A Model Context Protocol server for Excel file manipulation";
+    description = "MCP server for Excel file operations";
     homepage = "https://github.com/haris-musa/excel-mcp-server";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ ]; # Add maintainer here
     mainProgram = "excel-mcp-server";
   };
 }

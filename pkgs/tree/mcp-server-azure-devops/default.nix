@@ -5,12 +5,12 @@
 }:
 pkgs.buildNpmPackage rec {
   pname = "mcp-server-azure-devops";
-  version = "2.5.0";
+  version = "2.10.0";
   src = pkgs.fetchFromGitHub {
     owner = "microsoft";
     repo = "azure-devops-mcp";
     rev = "v${version}";
-    hash = "sha256-tIIPKjxAp5+rnl+WCfGaSlMt71A+v2Saq/E+pinBJqU=";
+    hash = "sha256-So/zsCt8uLAOjdk0OdgB6ENe9x2mmMy8YM4V/xlG+6c=";
   };
 
   npmDeps = pkgs.importNpmLock {
@@ -21,6 +21,11 @@ pkgs.buildNpmPackage rec {
 
   nativeBuildInputs = with pkgs; [
     typescript
+    pkg-config
+  ];
+
+  buildInputs = with pkgs; [
+    libsecret
   ];
 
   dontCheckForBrokenSymlinks = true;
