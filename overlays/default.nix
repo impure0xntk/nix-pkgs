@@ -40,10 +40,11 @@ let
           # Apply python overlay to pkgs so treePkgs uses overlaid python
           pkgsWithOverlays = final // javaPkgs // pythonOverlayResult // bun2nixOverlayResult;
         in
-        import pkgsPath {
+        (import pkgsPath {
           inherit lib prev;
           pkgs = pkgsWithOverlays;
-        };
+          uvPkgs = pkgsWithOverlays;
+        });
       inherit stable unstable;
     };
 in

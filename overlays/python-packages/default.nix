@@ -21,6 +21,8 @@ in
     {
       pname,
       src,
+      dependencies ? null,
+      pythonOverrides ? _final: _prev: { },
       lib ? final.lib,
       pkgs ? final,
     }:
@@ -28,11 +30,15 @@ in
       workspace = uv2nix.lib.workspace.loadWorkspace {
         workspaceRoot = src;
       };
+      dependencies' =
+        if dependencies == null then
+          { ${pname} = workspace.deps.default.${pname} or [ ]; }
+        else
+          dependencies;
       overlay = workspace.mkPyprojectOverlay {
         sourcePreference = "wheel";
+        dependencies = dependencies';
       };
-      pyprojectOverrides = _final: _prev: { };
-
       pythonSet =
         (pkgs.callPackage pyproject-nix.build.packages {
           python = pkgs.python312; # TODO: replace to python3.
@@ -41,11 +47,13 @@ in
             lib.composeManyExtensions [
               pyproject-build-systems.overlays.default
               overlay
-              pyprojectOverrides
+              pythonOverrides
             ]
           );
     in
-    pythonSet.mkVirtualEnv "${pname}-env" workspace.deps.default;
+    pythonSet.mkVirtualEnv "${pname}-env" {
+      ${pname} = workspace.deps.default.${pname} or [ ];
+    };
 
   # python3 = let self = prev.python3.override {
   #   inherit self;
