@@ -6,18 +6,18 @@
 }:
 pkgs.stdenv.mkDerivation rec {
   pname = "mcp-server-remote";
-  version = "0.1.38";
+  version = "0.14.2";
   src = pkgs.fetchFromGitHub {
-    owner = "geelen";
+    owner = "punkpeye";
     repo = "mcp-remote";
     rev = "v${version}";
-    hash = "sha256-+oNI2Uq7gW3sLzJS4ky2+BXhTmo44+WpcdYgieGPpmI=";
+    hash = "sha256-b3IEAVwxTb2c/2ENRgQqluuZ5BE3alXsqProDwWQ1eA=";
   };
 
   pnpmDeps = pkgs.fetchPnpmDeps {
     inherit pname version src;
     fetcherVersion = 4;
-    hash = "sha256-GpHA4DbEPSgmGzaEDMQKFjMXr8hvJj6B3nymu6f6dmk=";
+    hash = "sha256-h1Rh3xDw6mpCBWfh+fjfWtZ8WrdziEL2d6S+k9VaghQ=";
   };
 
   nativeBuildInputs = with pkgs; [
