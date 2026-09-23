@@ -46,6 +46,8 @@ pkgs.stdenv.mkDerivation {
 
   buildCommand = ''
     mkdir -p $out/bin
-    makeWrapper ${caoEnv}/bin/cao $out/bin/cao
+    for binname in cao cao-server; do
+      makeWrapper ${caoEnv}/bin/$binname $out/bin/$binname
+    done
   '';
 }
