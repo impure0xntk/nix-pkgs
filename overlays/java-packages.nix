@@ -4,6 +4,7 @@ final: prev: rec {
     "-XX:+UseStringDeduplication"
     "-XX:+UseZGC" # "-XX:+ZGenerational" is the default.
     "-XX:+UseLargePages"
+    "-XX:+UseCompactObjectHeaders" # will be default in Java 27
   ];
   tunedJavaToolArgs = tunedJavaArgs ++ [ ## unofficial: https://dev.to/nfrankel/faster-maven-builds-17dn etc...;
     "-XX:-TieredCompilation" "-XX:TieredStopAtLevel=1"
