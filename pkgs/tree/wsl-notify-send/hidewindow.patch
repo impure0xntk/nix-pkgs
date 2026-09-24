@@ -1,0 +1,8 @@
+--- a/vendor/gopkg.in/toast.v1/toast.go
++++ b/vendor/gopkg.in/toast.v1/toast.go
+@@ -1,5 +1,7 @@
++//go:build windows
++
+ package toast
+ 
+ import (
