@@ -53,5 +53,3 @@ nix flake check --impure .#checks.aarch64-linux.pkgs-test
 - The parent flake uses this submodule through `git+file:./submodules/nix-pkgs`.
 - Changes are managed as commits inside the submodule. In the parent repository, review the submodule update and `flake.lock` diff separately.
 - Do not add secrets or bypass the existing encryption and SOPS workflows.
-
-For general workflow (issue tracking, etc.), refer to the root AGENTS.md.
