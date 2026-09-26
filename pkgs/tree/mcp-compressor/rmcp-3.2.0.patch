@@ -1,0 +1,810 @@
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -114,7 +114,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -210,6 +210,12 @@
+ checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
+ 
+ [[package]]
++name = "base64"
++version = "0.23.1"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ac07cdecf99051d9a5238b80f35af32cdeba5b336e55d957b318b50137e18da5"
++
++[[package]]
+ name = "bitflags"
+ version = "2.11.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -327,7 +333,7 @@
+  "heck",
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -437,9 +443,9 @@
+ 
+ [[package]]
+ name = "darling"
+-version = "0.23.0"
++version = "0.24.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "25ae13da2f202d56bd7f91c25fba009e7717a1e4a1cc98a76d844b65ae912e9d"
++checksum = "ed17f5901b6630b993ca003def43f2f8ef4014fc13b047b57aad617ff32bc2ec"
+ dependencies = [
+  "darling_core",
+  "darling_macro",
+@@ -447,26 +453,26 @@
+ 
+ [[package]]
+ name = "darling_core"
+-version = "0.23.0"
++version = "0.24.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9865a50f7c335f53564bb694ef660825eb8610e0a53d3e11bf1b0d3df31e03b0"
++checksum = "6837e2cf7485aaae18f86181d2f0e9a7ed297a025e220aeabf63fdebd3a2ddff"
+ dependencies = [
+  "ident_case",
+  "proc-macro2",
+  "quote",
+  "strsim",
+- "syn",
++ "syn 3.0.6",
+ ]
+ 
+ [[package]]
+ name = "darling_macro"
+-version = "0.23.0"
++version = "0.24.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ac3984ec7bd6cfa798e62b4a642426a5be0e68f9401cfc2a01e3fa9ea2fcdb8d"
++checksum = "2ac7135c3ef02b2f7833bbeb1be5ba7f966dcde8a87c6b87f65a778d71a02785"
+ dependencies = [
+  "darling_core",
+  "quote",
+- "syn",
++ "syn 3.0.6",
+ ]
+ 
+ [[package]]
+@@ -477,7 +483,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -525,7 +531,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -684,7 +690,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -875,7 +881,7 @@
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "96547c2556ec9d12fb1578c4eaf448b04993e7fb79cbaad930a656880a6bdfa0"
+ dependencies = [
+- "base64",
++ "base64 0.22.1",
+  "bytes",
+  "futures-channel",
+  "futures-util",
+@@ -1117,7 +1123,7 @@
+  "quote",
+  "rustc_version",
+  "simd_cesu8",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -1136,7 +1142,7 @@
+ checksum = "38c0b942f458fe50cdac086d2f946512305e5631e720728f2a61aabcd47a6264"
+ dependencies = [
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -1238,7 +1244,7 @@
+  "assert_cmd",
+  "async-trait",
+  "axum",
+- "base64",
++ "base64 0.22.1",
+  "clap",
+  "dirs",
+  "flate2",
+@@ -1351,7 +1357,7 @@
+  "napi-derive-backend",
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -1364,7 +1370,7 @@
+  "proc-macro2",
+  "quote",
+  "semver",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -1415,7 +1421,7 @@
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "51e219e79014df21a225b1860a479e2dcd7cbd9130f4defd4bd0e191ea31d67d"
+ dependencies = [
+- "base64",
++ "base64 0.22.1",
+  "chrono",
+  "getrandom 0.2.17",
+  "http",
+@@ -1548,7 +1554,7 @@
+ checksum = "479ca8adacdd7ce8f1fb39ce9ecccbfe93a3f1344b3d0d97f20bc0196208f62b"
+ dependencies = [
+  "proc-macro2",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -1562,9 +1568,9 @@
+ 
+ [[package]]
+ name = "process-wrap"
+-version = "9.1.0"
++version = "9.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2e842efad9119158434d193c6682e2ebee4b44d6ad801d7b349623b3f57cdf55"
++checksum = "f95f6259ebd0640685b7cd26d635861f39208df0f89b2b61ff5cf76310fa54f6"
+ dependencies = [
+  "futures",
+  "indexmap",
+@@ -1616,7 +1622,7 @@
+  "proc-macro2",
+  "pyo3-macros-backend",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -1629,7 +1635,7 @@
+  "proc-macro2",
+  "pyo3-build-config",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -1813,7 +1819,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -1851,7 +1857,7 @@
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "62e0021ea2c22aed41653bc7e1419abb2c97e038ff2c33d0e1309e49a97deec0"
+ dependencies = [
+- "base64",
++ "base64 0.22.1",
+  "bytes",
+  "futures-core",
+  "futures-util",
+@@ -1901,18 +1907,19 @@
+ 
+ [[package]]
+ name = "rmcp"
+-version = "1.7.0"
++version = "3.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0810a9f717d9828f475fe1f629f4c305c8464b7f496c3a854b58d29e65f4058e"
++checksum = "42b6914fac0be956fe704a38239c3f44a9f841d1b06a5713d2f638065593f5b5"
+ dependencies = [
+  "async-trait",
+- "base64",
++ "base64 0.23.1",
+  "bytes",
+  "chrono",
+  "futures",
+  "http",
+  "http-body",
+  "http-body-util",
++ "indexmap",
+  "oauth2",
+  "pastey",
+  "pin-project-lite",
+@@ -1936,15 +1943,15 @@
+ 
+ [[package]]
+ name = "rmcp-macros"
+-version = "1.7.0"
++version = "3.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6aefac48c364756e97f04c0401ba3231e8607882c7c1d92da0437dc16307904d"
++checksum = "cdf1c49bd4d52014b94db0877410db273c2008f01628b0252a2e9460ad9b7fda"
+ dependencies = [
+  "darling",
+  "proc-macro2",
+  "quote",
+  "serde_json",
+- "syn",
++ "syn 3.0.6",
+ ]
+ 
+ [[package]]
+@@ -2103,7 +2110,7 @@
+  "proc-macro2",
+  "quote",
+  "serde_derive_internals",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -2162,7 +2169,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -2173,7 +2180,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -2286,9 +2293,9 @@
+ 
+ [[package]]
+ name = "sse-stream"
+-version = "0.2.3"
++version = "0.2.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f3962b63f038885f15bce2c6e02c0e7925c072f1ac86bb60fd44c5c6b762fb72"
++checksum = "c25ac7aff0abd1dbc474536e40416e1102c7dd9bfba0b9861c6d357f835dcfb4"
+ dependencies = [
+  "bytes",
+  "futures-util",
+@@ -2327,6 +2334,17 @@
+ ]
+ 
+ [[package]]
++name = "syn"
++version = "3.0.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "8593e8e72159ed2257d083c7a454a85cbf854f37a0966d8d483aff8c8a3ebcee"
++dependencies = [
++ "proc-macro2",
++ "quote",
++ "unicode-ident",
++]
++
++[[package]]
+ name = "sync_wrapper"
+ version = "1.0.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -2343,7 +2361,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -2408,7 +2426,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -2419,7 +2437,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -2471,7 +2489,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -2586,7 +2604,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -2770,7 +2788,7 @@
+  "bumpalo",
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+  "wasm-bindgen-shared",
+ ]
+ 
+@@ -2943,7 +2961,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -2954,7 +2972,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -3118,7 +3136,7 @@
+  "heck",
+  "indexmap",
+  "prettyplease",
+- "syn",
++ "syn 2.0.117",
+  "wasm-metadata",
+  "wit-bindgen-core",
+  "wit-component",
+@@ -3134,7 +3152,7 @@
+  "prettyplease",
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+  "wit-bindgen-core",
+  "wit-bindgen-rust",
+ ]
+@@ -3211,7 +3229,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+  "synstructure",
+ ]
+ 
+@@ -3232,7 +3250,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+@@ -3252,7 +3270,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+  "synstructure",
+ ]
+ 
+@@ -3292,7 +3310,7 @@
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn",
++ "syn 2.0.117",
+ ]
+ 
+ [[package]]
+--- a/crates/mcp-compressor-core/Cargo.toml
++++ b/crates/mcp-compressor-core/Cargo.toml
+@@ -17,7 +17,7 @@
+ thiserror  = "1"
+ rand       = "0.8"
+ tokio      = { version = "1", features = ["signal", "sync", "rt-multi-thread"] }
+-rmcp       = { version = "1.7.0", features = ["client", "server", "transport-child-process", "transport-io", "transport-streamable-http-server", "transport-streamable-http-client-reqwest", "reqwest", "auth"] }
++rmcp       = { version = "3.2.0", features = ["client", "server", "transport-child-process", "transport-io", "transport-streamable-http-server", "transport-streamable-http-client-reqwest", "reqwest", "auth"] }
+ axum       = "0.8"
+ libc       = "0.2"
+ async-trait = "0.1"
+--- a/crates/mcp-compressor-core/src/server/compressed.rs
++++ b/crates/mcp-compressor-core/src/server/compressed.rs
+@@ -5,8 +5,8 @@
+ //! language bindings, and the standalone Rust CLI.
+ 
+ use rmcp::model::{
+-    CallToolRequestParams, CallToolResult, Content, GetPromptRequestParams, GetPromptResult, Meta,
+-    RawContent, ReadResourceRequestParams, ResourceContents,
++    CallToolRequestParams, CallToolResult, ContentBlock, GetPromptRequestParams, GetPromptResult,
++    MetaObject, ReadResourceRequestParams, RequestMetaObject, ResourceContents,
+ };
+ use serde::{Deserialize, Serialize};
+ use serde_json::Value;
+@@ -315,7 +315,7 @@
+         wrapper_tool_name: &str,
+         backend_tool_name: &str,
+         tool_input: Value,
+-        request_meta: Option<Meta>,
++        request_meta: Option<MetaObject>,
+     ) -> Result<CallToolResult, Error> {
+         let backend = self.backend_for_wrapper(wrapper_tool_name)?;
+         let result = self
+@@ -447,7 +447,7 @@
+         backend: &ConnectedBackend,
+         backend_tool_name: &str,
+         tool_input: Value,
+-        request_meta: Option<Meta>,
++        request_meta: Option<MetaObject>,
+     ) -> Result<CallToolResult, Error> {
+         let tool = backend
+             .tools
+@@ -460,7 +460,7 @@
+             _ => None,
+         };
+         let mut params = CallToolRequestParams::new(backend_tool_name.to_string());
+-        params.meta = request_meta.map(strip_caller_progress_token);
++        params.meta = request_meta.map(|meta| RequestMetaObject(strip_caller_progress_token(meta)));
+         if let Some(arguments) = arguments {
+             params = params.with_arguments(arguments);
+         }
+@@ -545,8 +545,8 @@
+ /// The proxy does not relay `notifications/progress` from the backend, so
+ /// passing the caller's token through would promise progress that never
+ /// arrives. Every other `_meta` entry is forwarded untouched.
+-fn strip_caller_progress_token(mut meta: Meta) -> Meta {
+-    meta.remove("progressToken");
++fn strip_caller_progress_token(mut meta: MetaObject) -> MetaObject {
++    meta.0.remove("progressToken");
+     meta
+ }
+ 
+@@ -729,13 +729,16 @@
+         .join("\n")
+ }
+ 
+-fn content_to_string(content: Content) -> String {
+-    match content.raw {
+-        RawContent::Text(text) => text.text,
+-        RawContent::Image(image) => image.data,
+-        RawContent::Resource(resource) => resource_contents_to_string(vec![resource.resource]),
+-        RawContent::Audio(audio) => audio.data,
+-        RawContent::ResourceLink(resource) => resource.uri,
++fn content_to_string(content: ContentBlock) -> String {
++    match content {
++        ContentBlock::Text(text) => text.text,
++        ContentBlock::Image(image) => image.data,
++        ContentBlock::Resource(resource) => {
++            resource_contents_to_string(vec![resource.resource])
++        }
++        ContentBlock::Audio(audio) => audio.data,
++        ContentBlock::ResourceLink(resource) => resource.uri,
++        _ => String::new(),
+     }
+ }
+ 
+@@ -745,6 +748,7 @@
+         .map(|content| match content {
+             ResourceContents::TextResourceContents { text, .. } => text,
+             ResourceContents::BlobResourceContents { blob, .. } => blob,
++            _ => String::new(),
+         })
+         .collect::<Vec<_>>()
+         .join("\n")
+@@ -782,7 +786,7 @@
+         return result;
+     }
+     for item in result.content.iter_mut() {
+-        if let RawContent::Text(text) = &mut item.raw {
++        if let ContentBlock::Text(text) = item {
+             text.text = toonify_output(true, &text.text);
+         }
+     }
+@@ -806,8 +810,8 @@
+     fn toonify_reencodes_json_text_blocks_of_passthrough_results() {
+         let result = toonify_result(true, json_result());
+ 
+-        let text = match &result.content[0].raw {
+-            RawContent::Text(text) => text.text.clone(),
++        let text = match &result.content[0] {
++            ContentBlock::Text(text) => text.text.clone(),
+             other => panic!("expected text content, got {other:?}"),
+         };
+         assert_ne!(text, "[{\"id\":1,\"name\":\"alpha\"}]");
+@@ -822,8 +826,8 @@
+     fn toonify_disabled_preserves_passthrough_results() {
+         let result = toonify_result(false, json_result());
+ 
+-        let text = match &result.content[0].raw {
+-            RawContent::Text(text) => text.text.clone(),
++        let text = match &result.content[0] {
++            ContentBlock::Text(text) => text.text.clone(),
+             other => panic!("expected text content, got {other:?}"),
+         };
+         assert_eq!(text, "[{\"id\":1,\"name\":\"alpha\"}]");
+@@ -837,8 +841,8 @@
+ 
+         let result = toonify_result(true, result);
+ 
+-        let text = match &result.content[0].raw {
+-            RawContent::Text(text) => text.text.clone(),
++        let text = match &result.content[0] {
++            ContentBlock::Text(text) => text.text.clone(),
+             other => panic!("expected text content, got {other:?}"),
+         };
+         assert_eq!(text, "[{\"id\":1,\"name\":\"alpha\"}]");
+--- a/crates/mcp-compressor-core/src/server/connect.rs
++++ b/crates/mcp-compressor-core/src/server/connect.rs
+@@ -55,7 +55,7 @@
+         .map(|resources| {
+             resources
+                 .into_iter()
+-                .map(|resource| resource.raw.uri)
++                .map(|resource| resource.uri)
+                 .collect::<Vec<_>>()
+         })
+         .unwrap_or_default();
+@@ -152,14 +152,13 @@
+         }
+         state
+             .start_authorization(
+-                &[],
+-                &redirect_uri,
+-                Some(
+-                    backend
+-                        .oauth_app_name
+-                        .as_deref()
+-                        .unwrap_or("mcp-compressor"),
+-                ),
++                rmcp::transport::auth::AuthorizationRequest::new(redirect_uri.clone())
++                    .with_client_name(
++                        backend
++                            .oauth_app_name
++                            .as_deref()
++                            .unwrap_or("mcp-compressor"),
++                    ),
+             )
+             .await
+             .map_err(|error| {
+--- a/crates/mcp-compressor-core/src/server/dynamic_http_client.rs
++++ b/crates/mcp-compressor-core/src/server/dynamic_http_client.rs
+@@ -98,21 +98,20 @@
+     async fn get_stream(
+         &self,
+         uri: Arc<str>,
+-        session_id: Arc<str>,
++        session_id: Option<Arc<str>>,
+         last_event_id: Option<String>,
+         auth_token: Option<String>,
+         custom_headers: HashMap<HeaderName, HeaderValue>,
+     ) -> Result<BoxStream<'static, Result<Sse, SseError>>, StreamableHttpError<Self::Error>> {
+         let mut headers = self.merged_headers()?;
+         headers.extend(custom_headers);
+-        let mut request = self
+-            .client
+-            .get(uri.as_ref())
+-            .header(
+-                reqwest::header::ACCEPT,
+-                [EVENT_STREAM_MIME_TYPE, JSON_MIME_TYPE].join(", "),
+-            )
+-            .header(HEADER_SESSION_ID, session_id.as_ref());
++        let mut request = self.client.get(uri.as_ref()).header(
++            reqwest::header::ACCEPT,
++            [EVENT_STREAM_MIME_TYPE, JSON_MIME_TYPE].join(", "),
++        );
++        if let Some(session_id) = &session_id {
++            request = request.header(HEADER_SESSION_ID, session_id.as_ref());
++        }
+         if let Some(last_event_id) = last_event_id {
+             request = request.header(HEADER_LAST_EVENT_ID, last_event_id);
+         }
+@@ -142,7 +141,7 @@
+             }
+             None => return Err(StreamableHttpError::UnexpectedContentType(None)),
+         }
+-        Ok(SseStream::from_byte_stream(response.bytes_stream()).boxed())
++        Ok(SseStream::from_bytes_stream(response.bytes_stream()).boxed())
+     }
+ 
+     async fn delete_session(
+@@ -272,7 +271,7 @@
+         match content_type.as_deref() {
+             Some(ct) if ct.as_bytes().starts_with(EVENT_STREAM_MIME_TYPE.as_bytes()) => {
+                 Ok(StreamableHttpPostResponse::Sse(
+-                    SseStream::from_byte_stream(response.bytes_stream()).boxed(),
++                    SseStream::from_bytes_stream(response.bytes_stream()).boxed(),
+                     session_id,
+                 ))
+             }
+--- a/crates/mcp-compressor-core/src/server/registration.rs
++++ b/crates/mcp-compressor-core/src/server/registration.rs
+@@ -4,10 +4,11 @@
+ 
+ use rmcp::handler::server::ServerHandler;
+ use rmcp::model::{
+-    Annotated, CallToolRequestParams, CallToolResult, Content, ErrorCode, GetPromptRequestParams,
+-    GetPromptResult, InitializeResult, ListPromptsResult, ListResourcesResult, ListToolsResult,
+-    PaginatedRequestParams, Prompt, RawResource, ReadResourceRequestParams, ReadResourceResult,
+-    Resource, ResourceContents, ServerCapabilities, Tool,
++    CallToolRequestParams, CallToolResponse, CallToolResult, ContentBlock, ErrorCode,
++    GetPromptRequestParams, GetPromptResponse, InitializeResult,
++    ListPromptsResult, ListResourcesResult, ListToolsResult, PaginatedRequestParams, Prompt,
++    ReadResourceRequestParams, ReadResourceResponse, ReadResourceResult, Resource,
++    ResourceContents, ServerCapabilities, Tool,
+ };
+ use rmcp::service::RequestContext;
+ use rmcp::{ErrorData as McpError, RoleServer};
+@@ -66,7 +67,7 @@
+         &self,
+         request: CallToolRequestParams,
+         context: RequestContext<RoleServer>,
+-    ) -> Result<CallToolResult, McpError> {
++    ) -> Result<CallToolResponse, McpError> {
+         let wrapper_name = request.name.to_string();
+         let arguments = request.arguments.unwrap_or_default();
+         if wrapper_name.ends_with("invoke_tool") {
+@@ -77,9 +78,10 @@
+                 .unwrap_or_else(|| Value::Object(Map::new()));
+             return self
+                 .compressed
+-                .invoke_tool_result(&wrapper_name, &tool_name, tool_input, Some(context.meta))
++                .invoke_tool_result(&wrapper_name, &tool_name, tool_input, Some(context.meta.0))
+                 .await
+-                .map_err(mcp_error);
++                .map_err(mcp_error)
++                .map(CallToolResponse::from);
+         }
+ 
+         let output = if wrapper_name.ends_with("get_tool_schema") {
+@@ -94,7 +96,7 @@
+         }
+         .map_err(mcp_error)?;
+ 
+-        Ok(CallToolResult::success(vec![Content::text(output)]))
++        Ok(CallToolResult::success(vec![ContentBlock::text(output)]).into())
+     }
+ 
+     async fn list_resources(
+@@ -117,16 +119,13 @@
+         &self,
+         request: ReadResourceRequestParams,
+         _context: RequestContext<RoleServer>,
+-    ) -> Result<ReadResourceResult, McpError> {
++    ) -> Result<ReadResourceResponse, McpError> {
+         let text = self
+             .compressed
+             .read_resource(&request.uri)
+             .await
+             .map_err(mcp_error)?;
+-        Ok(ReadResourceResult::new(vec![ResourceContents::text(
+-            text,
+-            request.uri,
+-        )]))
++        Ok(ReadResourceResult::new(vec![ResourceContents::text(text, request.uri)]).into())
+     }
+ 
+     async fn list_prompts(
+@@ -149,11 +148,12 @@
+         &self,
+         request: GetPromptRequestParams,
+         _context: RequestContext<RoleServer>,
+-    ) -> Result<GetPromptResult, McpError> {
++    ) -> Result<GetPromptResponse, McpError> {
+         self.compressed
+             .get_prompt(&request.name, request.arguments)
+             .await
+             .map_err(mcp_error)
++            .map(GetPromptResponse::from)
+     }
+ 
+     fn get_tool(&self, _name: &str) -> Option<Tool> {
+@@ -174,19 +174,7 @@
+ }
+ 
+ fn convert_resource(uri: String) -> Resource {
+-    Annotated::new(
+-        RawResource {
+-            name: uri.clone(),
+-            uri,
+-            title: None,
+-            description: None,
+-            mime_type: None,
+-            icons: None,
+-            size: None,
+-            meta: None,
+-        },
+-        None,
+-    )
++    Resource::new(uri.clone(), uri)
+ }
+ 
+ fn required_string(arguments: &Map<String, Value>, name: &str) -> Result<String, McpError> {
+--- a/crates/mcp-compressor-core/tests/compressed_server_stdio.rs
++++ b/crates/mcp-compressor-core/tests/compressed_server_stdio.rs
+@@ -5,7 +5,7 @@
+     Error,
+ };
+ use rmcp::{
+-    model::{CallToolRequestParams, Meta},
++    model::{CallToolRequestParams, MetaObject, RequestMetaObject},
+     ServiceExt,
+ };
+ use serde_json::json;
+@@ -36,9 +36,9 @@
+             .unwrap()
+             .clone(),
+     );
+-    request.meta = Some(Meta(
++    request.meta = Some(RequestMetaObject(MetaObject(
+         json!({"trace": "forwarded"}).as_object().unwrap().clone(),
+-    ));
++    )));
+     let result = client.call_tool(request).await.unwrap();
+     let mut result = serde_json::to_value(result).unwrap();
+     let progress_token = result
+@@ -126,12 +126,12 @@
+             .unwrap()
+             .clone(),
+     );
+-    request.meta = Some(Meta(
++    request.meta = Some(RequestMetaObject(MetaObject(
+         json!({"trace": "kept", "progressToken": "caller-token"})
+             .as_object()
+             .unwrap()
+             .clone(),
+-    ));
++    )));
+     let result = client.call_tool(request).await.unwrap();
+     let result = serde_json::to_value(result).unwrap();
+     let backend_meta = result
