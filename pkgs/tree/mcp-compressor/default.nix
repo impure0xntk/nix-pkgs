@@ -4,7 +4,13 @@
   nix-update-script,
   ...
 }:
-pkgs.stable.rustPlatform.buildRustPackage (finalAttrs: {
+let
+  # The rmcp 3.x re-pin below pulls crates whose MSRV is 1.88, which the
+  # pinned `stable` toolchain (25.11, rustc 1.86) does not satisfy, so the
+  # build has to come from the newer `unstable` toolchain.
+  rustPlatform = pkgs.unstable.rustPlatform;
+in
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "mcp-compressor";
   version = "0.32.1";
 
