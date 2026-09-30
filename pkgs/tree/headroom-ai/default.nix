@@ -39,13 +39,13 @@ let
     ];
   };
 
-  version = "0.37.0";
+  version = "0.39.1";
 
   src = pkgs.fetchFromGitHub {
     owner = "headroomlabs-ai";
     repo = "headroom";
     rev = "v${version}";
-    hash = "sha256-89Tkzx56QIZWfNWLaiPdMynZGOLPr5EAP5RnLSgvBsA=";
+    hash = "sha256-pcsKKq27cKyB7uWskbnWP8VI/UU9RdrE89QClLisvcU=";
   };
 
   doCheck = false;
@@ -86,7 +86,7 @@ let
 
       cargoDeps = pkgs.unstable.rustPlatform.fetchCargoVendor {
         inherit pname version src;
-        hash = "sha256-iEvap6uLsAqCSv+l/S7K7osxL+yV7Y8pE6Dhaqt2AIA=";
+        hash = "sha256-azHjTfjdARzYuDMdH1AOYn0YV9U9lzaoULcSC/a9MuE=";
       };
     };
 in
