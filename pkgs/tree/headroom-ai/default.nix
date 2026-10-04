@@ -52,8 +52,23 @@ let
   pythonImportsCheck = [ "headroom" ];
 
   preFixup = ''
+    ortLib="$(${pkgs.findutils}/bin/find \
+      "${python.pkgs.onnxruntime}/${python.sitePackages}/onnxruntime/capi" \
+      -maxdepth 1 \
+      -name 'libonnxruntime.so.*' \
+      -type f \
+      -print -quit)"
+
+    if [ -z "$ortLib" ]; then
+      echo "error: libonnxruntime.so.* not found" >&2
+      exit 1
+    fi
+
+    echo "Using ONNX Runtime: $ortLib"
+
     wrapProgram $out/bin/headroom \
-      --prefix LD_LIBRARY_PATH : "${pkgs.unstable.onnxruntime}/lib"
+      --set ORT_DYLIB_PATH "$ortLib" \
+      --prefix LD_LIBRARY_PATH : "${pkgs.unstable.stdenv.cc.cc.lib}/lib"
   '';
 
   meta = with lib; {
