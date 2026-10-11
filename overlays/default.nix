@@ -37,8 +37,10 @@ let
 
           bun2nixOverlayResult = inputs.bun2nix.overlays.default final prev;
 
+          zedOverlayResult = inputs.zed-extensions.overlays.default final prev;
+
           # Apply python overlay to pkgs so treePkgs uses overlaid python
-          pkgsWithOverlays = final // javaPkgs // pythonOverlayResult // bun2nixOverlayResult;
+          pkgsWithOverlays = final // javaPkgs // pythonOverlayResult // bun2nixOverlayResult // zedOverlayResult;
         in
         (import pkgsPath {
           inherit lib prev;
