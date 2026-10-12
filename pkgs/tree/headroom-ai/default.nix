@@ -12,6 +12,7 @@ let
     tomlkit
     litellm
     ast-grep-cli
+    truststore
   ];
 
   optionalDeps = {
@@ -39,13 +40,13 @@ let
     ];
   };
 
-  version = "0.39.1";
+  version = "0.40.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "headroomlabs-ai";
     repo = "headroom";
     rev = "v${version}";
-    hash = "sha256-pcsKKq27cKyB7uWskbnWP8VI/UU9RdrE89QClLisvcU=";
+    hash = "sha256-5tNeUVybEXufNiQ0Qa28U1mY5nil6sYFy5/UKb/BACQ=";
   };
 
   doCheck = false;
@@ -101,7 +102,7 @@ let
 
       cargoDeps = pkgs.unstable.rustPlatform.fetchCargoVendor {
         inherit pname version src;
-        hash = "sha256-azHjTfjdARzYuDMdH1AOYn0YV9U9lzaoULcSC/a9MuE=";
+        hash = "sha256-CBTx7+vGtbY8Z0qGjDs6g00DHqNWO1Wwnl5ksafn2Bc=";
       };
     };
 in
