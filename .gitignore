@@ -5,8 +5,4 @@ result-*
 # Ignore automatically generated direnv output
 .direnv
 
-# beads local config and caches
-.beads/
-
-# bv (beads viewer) local config and caches
-.bv/
+.zvec-grep
