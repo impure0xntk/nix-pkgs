@@ -13,11 +13,12 @@ pkgs.stdenv.mkDerivation rec {
     rev = "7ab5a9ab0522e9427077024c4be42b8f076398e3"; # 2026-09-02
     hash = "sha256-h8qSF8qHDssrZafQFY7WbOhOww54sa5eswyHaz91RdI=";
   };
+  pnpm = pkgs.pnpm_11;
 
   pnpmDeps = pkgs.fetchPnpmDeps {
-    inherit pname version src;
+    inherit pname version src pnpm;
     fetcherVersion = 4;
-    hash = "sha256-bQOsqS0TV7+iIrGWhDUY6tuEJhSpnjm4jRy72H6R40Q=";
+    hash = "sha256-YNCtrikHE/q00oXicB9ZIlP1ZsRNv1/gJKsFpfZOU3Y=";
   };
 
   nativeBuildInputs = with pkgs; [

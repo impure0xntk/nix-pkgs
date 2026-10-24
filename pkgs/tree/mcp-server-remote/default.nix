@@ -6,18 +6,22 @@
 }:
 pkgs.stdenv.mkDerivation rec {
   pname = "mcp-server-remote";
-  version = "0.14.3";
+  version = "0.15.2";
   src = pkgs.fetchFromGitHub {
     owner = "punkpeye";
     repo = "mcp-remote";
     rev = "v${version}";
-    hash = "sha256-oRsutl0pvt+9IsQ86lr1UgbU7TKJHVoLDLLagutEy58=";
+    hash = "sha256-/bA+kdlnC830fFDAQBQNVm3qTmMSX1hyewaXCkT5Erk=";
   };
 
+  # pnpm 11 is the nixpkgs default in both 26.05 and 26.11; keep it pinned so
+  # the offline install stays reproducible across the two nixpkgs revisions.
+  pnpm = pkgs.pnpm_11;
+
   pnpmDeps = pkgs.fetchPnpmDeps {
-    inherit pname version src;
+    inherit pname version src pnpm;
     fetcherVersion = 4;
-    hash = "sha256-h1Rh3xDw6mpCBWfh+fjfWtZ8WrdziEL2d6S+k9VaghQ=";
+    hash = "sha256-pqZIsJos1thOuLoJtRDYPNldhAaaLDlqjdfQ0ntKA/4=";
   };
 
   nativeBuildInputs = with pkgs; [

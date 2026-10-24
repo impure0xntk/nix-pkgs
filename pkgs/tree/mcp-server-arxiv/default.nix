@@ -8,12 +8,12 @@
 
 let
   pythonPkgs = pkgs.unstable.python3Packages;
-  version = "0.7.2";
+  version = "0.8.2";
   src = pkgs.fetchFromGitHub {
     owner = "blazickjp";
     repo = "arxiv-mcp-server";
     rev = "v${version}";
-    hash = "sha256-XmnuFtuzzTk6UppfU8c6RW9wMuPbMMSAu9sVEfAK0zM=";
+    hash = "sha256-/PXckr/X5consyucgFmEggj6779eVXJEit3zoYD38W8=";
   };
 
   arxiv = pythonPkgs.arxiv.overridePythonAttrs (old: {
