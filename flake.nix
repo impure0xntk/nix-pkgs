@@ -29,6 +29,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nix-multiverse = {
+      url = "github:fzakaria/nixpkgs-multiverse";
+    };
+
     zed-extensions = { # For buildZed...Packages only
       url = "github:SwornSystems/nix-zed-extensions";
       inputs.nixpkgs.follows = "nixpkgs";

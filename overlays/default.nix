@@ -15,39 +15,41 @@ let
         config.allowUnfree = true;
       };
 
-      # stable/unstable uses to avoid unnecessary python build
       stable = import inputs.nixpkgs purePkgsOptions;
       unstable = import inputs.nixpkgs-unstable purePkgsOptions;
+
+      # nixpkgs-multiverse: access every nixpkgs revision's packages via pkgs.multiverse
+      multiverse = inputs.nix-multiverse.legacyPackages.${system};
+
+      javaPkgs = (import ./java-packages.nix) final prev;
+
+      pythonOverlayFunc = (
+        import ./python-packages {
+          uv2nix = inputs.uv2nix;
+          pyproject-nix = inputs.pyproject-nix;
+          pyproject-build-systems = inputs.pyproject-build-systems;
+        }
+      );
+      pythonOverlayResult = pythonOverlayFunc final prev;
+
+      bun2nixOverlayResult = inputs.bun2nix.overlays.default final prev;
+
+      zedOverlayResult = inputs.zed-extensions.overlays.default final prev;
+
+      pkgsWithOverlays = final // javaPkgs // pythonOverlayResult // bun2nixOverlayResult // zedOverlayResult;
+
+      my = (import pkgsPath {
+        inherit lib prev;
+        pkgs = pkgsWithOverlays;
+        uvPkgs = pkgsWithOverlays;
+      }) // {
+        multiverse = multiverse;
+      };
     in
     {
-      my =
-        let
-          # Java packages (jdk, zulu, etc.)
-          javaPkgs = (import ./java-packages.nix) final prev;
-
-          # Python overlay configuration
-          pythonOverlayFunc = (
-            import ./python-packages {
-              uv2nix = inputs.uv2nix;
-              pyproject-nix = inputs.pyproject-nix;
-              pyproject-build-systems = inputs.pyproject-build-systems;
-            }
-          );
-          pythonOverlayResult = pythonOverlayFunc final prev;
-
-          bun2nixOverlayResult = inputs.bun2nix.overlays.default final prev;
-
-          zedOverlayResult = inputs.zed-extensions.overlays.default final prev;
-
-          # Apply python overlay to pkgs so treePkgs uses overlaid python
-          pkgsWithOverlays = final // javaPkgs // pythonOverlayResult // bun2nixOverlayResult // zedOverlayResult;
-        in
-        (import pkgsPath {
-          inherit lib prev;
-          pkgs = pkgsWithOverlays;
-          uvPkgs = pkgsWithOverlays;
-        });
+      my = my;
       inherit stable unstable;
+      multiverse = multiverse;
     };
 in
 myOverlay
