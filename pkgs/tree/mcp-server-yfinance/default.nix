@@ -4,7 +4,10 @@
   ...
 }:
 let
-  pythonPkgs = pkgs.unstable.python3Packages;
+  # To pin mcp
+  pythonRev = pkgs.multiverse.revOf "python3" "3.14.7";
+  pythonPkgs = (pkgs.multiverse.at pythonRev).python3Packages;
+
   version = "0.14.0";
   src = pkgs.fetchFromGitHub {
     owner = "narumiruna";
