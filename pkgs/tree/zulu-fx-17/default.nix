@@ -5,8 +5,8 @@
       pkgs.wrapGAppsHook3
     ];
   })).override { enableJavaFX = true; dists.x86_64-linux = {
-    zuluVersion = "17.68.203";
-    jdkVersion = "17.0.20.1";
-    hash = "sha256-2a7mYwSmR+C6x/cyYk/6wrDFKWI4kpHAjqzwC8N3lEM=";
+    zuluVersion = "17.70.113";
+    jdkVersion = "17.0.21.0.3";
+    hash = "sha256-UzfgUH7VOfHDX54NPEx2adWUpm5ay5N/hLZal3ehTr0=";
   };
 }
