@@ -6,12 +6,12 @@
 }:
 pkgs.stdenv.mkDerivation rec {
   pname = "mcp-server-remote";
-  version = "0.15.2";
+  version = "0.16.5";
   src = pkgs.fetchFromGitHub {
     owner = "punkpeye";
     repo = "mcp-remote";
     rev = "v${version}";
-    hash = "sha256-/bA+kdlnC830fFDAQBQNVm3qTmMSX1hyewaXCkT5Erk=";
+    hash = "sha256-1OOoVM7ewifNlTms+AdfwVuhrLrslPeFJXm24ukWCJ4=";
   };
 
   # pnpm 11 is the nixpkgs default in both 26.05 and 26.11; keep it pinned so
@@ -21,7 +21,7 @@ pkgs.stdenv.mkDerivation rec {
   pnpmDeps = pkgs.fetchPnpmDeps {
     inherit pname version src pnpm;
     fetcherVersion = 4;
-    hash = "sha256-pqZIsJos1thOuLoJtRDYPNldhAaaLDlqjdfQ0ntKA/4=";
+    hash = "sha256-RAaCt98RkEydJwrE4m+HVWG1WAv/WEoP6E/Q4ZIruek=";
   };
 
   nativeBuildInputs = with pkgs; [

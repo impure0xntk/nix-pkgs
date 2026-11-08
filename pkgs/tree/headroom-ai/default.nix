@@ -40,13 +40,13 @@ let
     ];
   };
 
-  version = "0.41.0";
+  version = "0.43.1";
 
   src = pkgs.fetchFromGitHub {
     owner = "headroomlabs-ai";
     repo = "headroom";
     rev = "v${version}";
-    hash = "sha256-ITVrw5ruGnNI9t7pq+0Z6gsnqDDAB/5v7I3oOQM5AtE=";
+    hash = "sha256-lZNB0v5nheQyiZF4EoRgqqsjmGjg7n98OgiWQCZejXQ=";
   };
 
   doCheck = false;
@@ -102,8 +102,17 @@ let
 
       cargoDeps = pkgs.unstable.rustPlatform.fetchCargoVendor {
         inherit pname version src;
-        hash = "sha256-RF1b24TIV3EASGfXKUHSrGgQGBUmJLYxzDEjb4fvKPo=";
+        hash = "sha256-NkbMkyCc2i64nhKBE7ZdSAjefvhQac+InWDjlbQg474=";
       };
+
+      # nixpkgs-unstable pins are behind upstream floors; relax
+      prePatch = ''
+        substituteInPlace pyproject.toml \
+          --replace 'opentelemetry-api>=1.45.1' 'opentelemetry-api>=1.0' \
+          --replace 'tomlkit>=0.15.2,<1.0' 'tomlkit>=0.15' \
+          --replace 'filelock>=4.2.1' 'filelock>=3.0' \
+          --replace 'click>=8.3.3' 'click>=8.0'
+      '';
     };
 in
 mkDrv [ ] // {

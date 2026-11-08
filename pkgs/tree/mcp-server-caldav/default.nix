@@ -2,12 +2,12 @@
 
 pkgs.buildNpmPackage rec {
   pname = "mcp-server-caldav";
-  version = "0.10.0";
+  version = "0.10.3";
   src = pkgs.fetchFromGitHub {
     owner = "dominik1001";
     repo = "caldav-mcp";
     rev = "v${version}";
-    hash = "sha256-P7WViU0LjVby5YmHxClBXfckGqRVpv6Oml+BPb6ywL4=";
+    hash = "sha256-JvogrRHVZ8PgphHZbgZj1QLXoPPqoq6ys0u3s0qpy8c=";
   };
 
   npmDeps = pkgs.importNpmLock {

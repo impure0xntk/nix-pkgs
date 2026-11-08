@@ -6,14 +6,14 @@
 }:
 pkgs.buildGoModule rec {
   pname = "mcpjungle";
-  version = "0.4.6";
+  version = "0.4.7";
   src = pkgs.fetchFromGitHub {
     owner = "mcpjungle";
     repo = "MCPJungle";
     tag = version;
-    hash = "sha256-XzszhbkQENeUgOOVBw7dsqZWR7hU3yLYOAclf3E9gy8=";
+    hash = "sha256-VhekFu+LZ25VtsI8p75UB9iEVCgxYvJq72BSRDBlY8E=";
   };
-  vendorHash = "sha256-3uatBXXdQzqGuhFuLkpmoMkYYqUMt1dFqm7vuazMLqs=";
+  vendorHash = "sha256-K/VErh+f6rU0axuEHu4UuJEOxtWJO9BKS4fNGenQrbo=";
 
   preBuild = ''
     mkdir -p internal/dashboardui/dist

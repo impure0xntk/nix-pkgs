@@ -1,14 +1,14 @@
 { pkgs, lib, ... }:
 
 let
-  pythonPkgs = pkgs.python3Packages;
-  version = "0.1.8";
+  pythonPkgs = pkgs.unstable.python3Packages;
+  version = "2.2.6";
 
   src = pkgs.fetchFromGitHub {
     owner = "haris-musa";
     repo = "excel-mcp-server";
     rev = "v${version}";
-    hash = "sha256-F3QIAZWbuyE2Yl3e88HD9CZvkBpeMJI/Lm6uXuUgWKg=";
+    hash = "sha256-ivSDYxp6XyjLEWXzM6r6rjEpK11MmdH4waVHEyHHbUY=";
   };
 in
 pythonPkgs.buildPythonApplication {
@@ -17,25 +17,27 @@ pythonPkgs.buildPythonApplication {
 
   pyproject = true;
 
+  # upstream requires mcp>=2.2 and pillow>=13 but nixpkgs ships 1.29/12.3, relax
+  prePatch = ''
+    substituteInPlace pyproject.toml \
+      --replace 'uv_build>=0.13.1,<0.14' 'uv_build>=0.10' \
+      --replace 'mcp>=2.2,<3' 'mcp>=1.0' \
+      --replace 'pillow>=13,<14' 'pillow>=10'
+  '';
+
   build-system = with pythonPkgs; [
-    hatchling
+    uv-build
   ];
 
   dependencies = with pythonPkgs; [
-    loguru
     mcp
-    fastmcp
+    olefile
     openpyxl
-    pandas
-    python-dotenv
-    typer
+    pillow
+    pydantic
+    starlette
+    uvicorn
   ];
-
-  # Patch pyproject.toml to accept fastmcp 3.x
-  postPatch = ''
-    substituteInPlace pyproject.toml \
-      --replace 'fastmcp>=2.0.0,<3.0.0' 'fastmcp>=2.0.0'
-  '';
 
   # Disable tests for now - can enable once we know the test structure
   doCheck = false;

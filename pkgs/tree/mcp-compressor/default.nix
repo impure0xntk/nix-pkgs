@@ -12,13 +12,13 @@ let
 in
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "mcp-compressor";
-  version = "0.32.1";
+  version = "0.40.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "atlassian-labs";
     repo = "mcp-compressor";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-jOcbbstGaH5E/XFGEYbMHe/sNBluf4NMdEmgsB9jmVo=";
+    hash = "sha256-2lSVBh5RjeRlZonWsXNxQeHRh1RIyJxTwh+NvMVhx+Y=";
   };
 
   # For coding agents that speak the current MCP model (e.g. Goose):
@@ -31,8 +31,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
   # to ^3.2.0, re-resolves the lock (rmcp, rmcp-macros, darling, process-wrap,
   # sse-stream, plus new base64 0.23 and syn 3) and rewrites the call sites.
   # TODO: remove after update
-  cargoPatches = [ ./rmcp-3.2.0.patch ];
-  cargoHash = "sha256-/zc7c1zyA1FFNKvoNra/r92ygX7UklV8IwMcn074dbk=";
+  # upstream 0.40.0 already uses rmcp 3.5.1, no patch needed
+  cargoHash = "sha256-qXQkFcymYh+qfD5CaUsmnDT62H1eUtn/Mhzn9KTxqAo=";
 
   # The workspace also ships Python (pyo3) and Node (napi) bindings.
   # Only the CLI binary is packaged here; building every member would

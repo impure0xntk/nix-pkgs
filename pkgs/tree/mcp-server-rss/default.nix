@@ -8,12 +8,12 @@
 }:
 pkgs.buildNpmPackage rec {
   pname = "mcp-rss-aggregator";
-  version = "0.2.0";
+  version = "0.3.0";
   src = pkgs.fetchFromGitHub {
     owner = "imprvhub";
     repo = pname;
-    rev = "5546bda2310b2d8733c8c0ff5b1cc905cfb186c9"; # 2025-08-24
-    hash = "sha256-LY/rFewn05K7EFbmvSf2zbbTKEjNGRbO7rGSepf8gIU=";
+    rev = "0.3.0";
+    hash = "sha256-Rf/i4wmidspgVyRY+QOSIr75TEs9GAk0OIDdIeFshds=";
   };
 
   npmDeps = pkgs.importNpmLock {
