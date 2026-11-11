@@ -19,7 +19,9 @@ let
       unstable = import inputs.nixpkgs-unstable purePkgsOptions;
 
       # nixpkgs-multiverse: access every nixpkgs revision's packages via pkgs.multiverse
-      multiverse = inputs.nix-multiverse.legacyPackages.${system};
+      multiverse = inputs.nix-multiverse.lib.mkMultiverse {
+        config.allowUnfree = true;
+      };
 
       javaPkgs = (import ./java-packages.nix) final prev;
 
