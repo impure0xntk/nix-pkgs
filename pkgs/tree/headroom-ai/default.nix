@@ -40,13 +40,13 @@ let
     ];
   };
 
-  version = "0.43.1";
+  version = "0.44.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "headroomlabs-ai";
     repo = "headroom";
     rev = "v${version}";
-    hash = "sha256-lZNB0v5nheQyiZF4EoRgqqsjmGjg7n98OgiWQCZejXQ=";
+    hash = "sha256-t3hBnXKRzzMOFPFTyFu6+uV0QVGKJH4ZjIXQVG/4I5U=";
   };
 
   doCheck = false;
@@ -96,13 +96,19 @@ let
       nativeBuildInputs = with pkgs.unstable.rustPlatform; [
         maturinBuildHook
         cargoSetupHook
+
+        pkgs.unstable.pkg-config
+      ];
+      buildInputs = with pkgs.unstable; [
+        oniguruma
+        sqlite
       ];
 
       dependencies = baseDependencies ++ selected;
 
       cargoDeps = pkgs.unstable.rustPlatform.fetchCargoVendor {
         inherit pname version src;
-        hash = "sha256-NkbMkyCc2i64nhKBE7ZdSAjefvhQac+InWDjlbQg474=";
+        hash = "sha256-hhfYzkv7N/7L1Gv9I9RcnLRsrTjcRkBroo5ei5VbuHU=";
       };
 
       # nixpkgs-unstable pins are behind upstream floors; relax
@@ -111,7 +117,8 @@ let
           --replace 'opentelemetry-api>=1.45.1' 'opentelemetry-api>=1.0' \
           --replace 'tomlkit>=0.15.2,<1.0' 'tomlkit>=0.15' \
           --replace 'filelock>=4.2.1' 'filelock>=3.0' \
-          --replace 'click>=8.3.3' 'click>=8.0'
+          --replace 'click>=8.3.3' 'click>=8.0' \
+          --replace 'click>=8.5.0' 'click>=8.0'
       '';
     };
 in
