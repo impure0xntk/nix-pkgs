@@ -6,13 +6,13 @@
 let
   python = pkgs.unstable.python3;
   pythonPkgs = python.pkgs;
-  version = "0.35.0";
+  version = "0.36.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "gamosoft";
     repo = "NoteDiscovery";
     rev = "v${version}";
-    hash = "sha256-sU0Q21QB/mXxB6hfgwgYcXHbAiFFHiPrA9X3xeo69Po=";
+    hash = "sha256-jcCCXBLJ0vYLRVkrPPtIgoxyuofdAr3E/wheJXGyOAA=";
   };
 
   # The web UI pulls its browser libraries from CDNs at runtime upstream.

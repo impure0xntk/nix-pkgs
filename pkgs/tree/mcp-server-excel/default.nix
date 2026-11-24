@@ -2,13 +2,13 @@
 
 let
   pythonPkgs = pkgs.unstable.python3Packages;
-  version = "2.2.6";
+  version = "2.3.3";
 
   src = pkgs.fetchFromGitHub {
     owner = "haris-musa";
     repo = "excel-mcp-server";
     rev = "v${version}";
-    hash = "sha256-ivSDYxp6XyjLEWXzM6r6rjEpK11MmdH4waVHEyHHbUY=";
+    hash = "sha256-Z6Uqg/c8uiJNgkMWDS1RQWOdftL0U77Jg/UeLwLTNA0=";
   };
 in
 pythonPkgs.buildPythonApplication {

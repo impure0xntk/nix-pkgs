@@ -6,21 +6,21 @@ let
   src = pkgs.fetchFromGitHub {
     owner = "usememos";
     repo = "memos";
-    rev = "26.11.0";
-    hash = "sha256-Ng9S9BKLyB/KuqeIk6AEs7FLu1gPWreeSAq/WdCc9YQ=";
+    rev = "26.11.2";
+    hash = "sha256-R3Ui4y8wjZdaIuUrY6Bjuio4TGaZgnkFfRYV0xuR6n4=";
   };
 in
 pkgs.stdenvNoCC.mkDerivation {
   pname = "memos-web";
-  version = "26.11.0";
+  version = "26.11.2";
   inherit src;
   pnpmDeps = pkgs.fetchPnpmDeps {
     pname = "memos-web";
-    version = "26.11.0";
+    version = "26.11.2";
     inherit pnpm src;
     sourceRoot = "${src.name}/web";
     fetcherVersion = 4;
-    hash = "sha256-qX5WWPsi8sKPkXPBR48RYXncLytsxfLwkqvivBO0WmY=";
+    hash = "sha256-WZ+Qg7DOGGq26FJfKvKwwK8U0l+SsjCIY8akLPz22us=";
   };
   pnpmRoot = "web";
   nativeBuildInputs = [

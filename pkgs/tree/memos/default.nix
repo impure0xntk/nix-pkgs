@@ -2,7 +2,7 @@
 { pkgs, lib, ... }:
 
 let
-  version = "26.11.0";
+  version = "26.11.2";
   memos-web = pkgs.my.memos-web;
 in
 pkgs.buildGo127Module {
@@ -12,9 +12,9 @@ pkgs.buildGo127Module {
     owner = "usememos";
     repo = "memos";
     rev = version;
-    hash = "sha256-Ng9S9BKLyB/KuqeIk6AEs7FLu1gPWreeSAq/WdCc9YQ=";
+    hash = "sha256-R3Ui4y8wjZdaIuUrY6Bjuio4TGaZgnkFfRYV0xuR6n4=";
   };
-  vendorHash = "sha256-CuBQYJ8lDd113SWFDA+nIcULwmWtiTLbbegzfoMgtb4=";
+  vendorHash = "sha256-w1tCEuLbbTG+xrIx+Rij3kqsjxjRFoKov0+SDdvZUQ4=";
   # release-version tests require `git` runtime not
   # available in build sandbox; skip them.
   doCheck = false;

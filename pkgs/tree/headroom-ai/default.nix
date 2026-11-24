@@ -40,13 +40,13 @@ let
     ];
   };
 
-  version = "0.44.0";
+  version = "0.45.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "headroomlabs-ai";
     repo = "headroom";
     rev = "v${version}";
-    hash = "sha256-t3hBnXKRzzMOFPFTyFu6+uV0QVGKJH4ZjIXQVG/4I5U=";
+    hash = "sha256-F6EY93xTo/VjMW3SAT1LOqBjMTHBZp4GcnO/Wqe1VQs=";
   };
 
   doCheck = false;
@@ -108,13 +108,13 @@ let
 
       cargoDeps = pkgs.unstable.rustPlatform.fetchCargoVendor {
         inherit pname version src;
-        hash = "sha256-hhfYzkv7N/7L1Gv9I9RcnLRsrTjcRkBroo5ei5VbuHU=";
+        hash = "sha256-kaFUHCUigzdZnmo46hUIgndZiqQpJ4r3grDWLCDUodQ=";
       };
 
       # nixpkgs-unstable pins are behind upstream floors; relax
       prePatch = ''
         substituteInPlace pyproject.toml \
-          --replace 'opentelemetry-api>=1.45.1' 'opentelemetry-api>=1.0' \
+          --replace 'opentelemetry-api>=1.45.2' 'opentelemetry-api>=1.0' \
           --replace 'tomlkit>=0.15.2,<1.0' 'tomlkit>=0.15' \
           --replace 'filelock>=4.2.1' 'filelock>=3.0' \
           --replace 'click>=8.3.3' 'click>=8.0' \

@@ -8,14 +8,14 @@
 
 pkgs.unstable.buildGoModule (finalAttrs: {
   pname = "ghqr";
-  version = "0.4.1";
+  version = "0.7.0";
   __structuredAttrs = true;
 
   src = fetchFromGitHub {
     owner = "microsoft";
     repo = "ghqr";
     tag = "v.${finalAttrs.version}";
-    hash = "sha256-TJ2PoWidUVcNC1RaZJVXXVqstc0nlgurqAxgvbQXSCc=";
+    hash = "sha256-LM9fPXK4Jb9p25/E1joWK2TaD3L1LaZIeMNrrjoG6/c=";
   };
 
   vendorHash = "sha256-la/yXEZzAIt9l0q0P7+N8yCW0BQie9sLmAhLFK1qyGE=";

@@ -12,13 +12,13 @@ let
 in
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "mcp-compressor";
-  version = "0.40.0";
+  version = "0.40.1";
 
   src = pkgs.fetchFromGitHub {
     owner = "atlassian-labs";
     repo = "mcp-compressor";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-2lSVBh5RjeRlZonWsXNxQeHRh1RIyJxTwh+NvMVhx+Y=";
+    hash = "sha256-t+nGws8iamxiAaW8MZxuawYeQcXzZPKmlk+nMD+N8HM=";
   };
 
   # For coding agents that speak the current MCP model (e.g. Goose):

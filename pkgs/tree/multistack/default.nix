@@ -8,12 +8,12 @@ let
 in
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "multistack";
-  version = "1.1.5";
+  version = "1.2.0";
   src = pkgs.fetchFromGitHub {
     owner = "gi-dellav";
     repo = "multistack";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-WFP3y4d3MK1BQdUWQsu3QtGyMo4xac6q0TzRUaEg1Gg=";
+    hash = "sha256-heBZAC8P+kP6SjmhRg9UGFhuvUmxYDiV3dSMx5iW+BI=";
   };
   cargoHash = "sha256-pn3OpAHuSb5JCNsqrVT8KAmaoG5160O8QZt0gvW5Frc=";
   meta = {

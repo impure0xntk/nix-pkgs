@@ -1,12 +1,12 @@
 { pkgs, lib, ... }:
 
 let
-  version = "0.3.0";
+  version = "0.3.1";
   src = pkgs.fetchFromGitHub {
     owner = "zvec-ai";
     repo = "zvec-grep";
     rev = "v${version}";
-    hash = "sha256-m+EshRJznj27l4wFh8CxKJVH5eaIJKUEZylDEKd0BuU=";
+    hash = "sha256-9Knxg5TEDpQj1iRViga/EkAKsrTJioBRj9TjkmWOTeA=";
   };
   zvecPrebuilt = pkgs.fetchurl {
     url = "https://github.com/zvec-ai/zvec-rust/releases/download/v0.8.0/zvec-prebuilt-x86_64-unknown-linux-gnu.tar.gz";
