@@ -62,6 +62,73 @@ let
     pydantic
   ];
 
+  # Upstream loads <repo root>/config.yaml unconditionally, so handing it a
+  # partial external file would drop keys the code then indexes blindly (the
+  # first start then dies with `KeyError: 'authentication'`). This rewrites the
+  # load to resolve an optional NOTEDISCOVERY_CONFIG and deep-merge it onto the
+  # packaged defaults, leaving every other root-relative path (VERSION, themes)
+  # on NOTEDISCOVERY_ROOT. Written as two files rather than one script because
+  # the replacement text uses both Python quote styles, which a Nix indented
+  # string would mangle.
+  configLoaderBlock = pkgs.writeText "notediscovery-config-loader.py" ''
+    def _deep_merge(base, override):
+        merged = dict(base)
+        for key, value in (override or {}).items():
+            if isinstance(value, dict) and isinstance(merged.get(key), dict):
+                merged[key] = _deep_merge(merged[key], value)
+            else:
+                merged[key] = value
+        return merged
+
+    # NOTEDISCOVERY_CONFIG selects the file; everything else the app reads from
+    # the repo root still comes from NOTEDISCOVERY_ROOT.
+    _default_path = Path(os.getenv("NOTEDISCOVERY_ROOT", "")) / "config.yaml"
+    config_path = (
+        Path(os.environ["NOTEDISCOVERY_CONFIG"])
+        if os.environ.get("NOTEDISCOVERY_CONFIG")
+        else _default_path
+    )
+    config = {}
+    if _default_path.exists():
+        with open(_default_path, 'r', encoding='utf-8') as f:
+            config = yaml.safe_load(f) or {}
+    if config_path != _default_path:
+        # Fail with the offending path instead of letting read_text raise a
+        # bare FileNotFoundError: a typo is a config error, not a crash.
+        if not config_path.exists():
+            raise FileNotFoundError(
+                "NOTEDISCOVERY_CONFIG points at a missing file: %s" % config_path
+            )
+        config = _deep_merge(config, yaml.safe_load(config_path.read_text(encoding='utf-8')))
+  '';
+
+  patchConfigLoader = pkgs.writeText "notediscovery-patch-config.py" ''
+    import re
+    import sys
+    from pathlib import Path
+
+    target = Path(sys.argv[1])
+    load = Path(sys.argv[2]).read_text(encoding="utf-8").rstrip("\n")
+
+    text = target.read_text(encoding="utf-8")
+    pattern = re.compile(
+        r"^config_path = Path\(__file__\)\.parent\.parent / \"config\.yaml\"\n"
+        r"with open\(config_path, 'r', encoding='utf-8'\) as f:\n"
+        r"    config = yaml\.safe_load\(f\)$",
+        re.MULTILINE,
+    )
+    if not pattern.search(text):
+        sys.exit("notediscovery: config loader block not found in %s" % target)
+    target.write_text(pattern.sub(lambda _: load, text, count=1), encoding="utf-8")
+    target.write_text(
+        target.read_text(encoding="utf-8").replace(
+            'Path(__file__).parent.parent',
+            'Path(os.getenv("NOTEDISCOVERY_ROOT", ""))',
+        ),
+        encoding="utf-8",
+    )
+  '';
+
   # Entry point run.py:main re-execs `python -m uvicorn`, which inherits no
   # PYTHONPATH from the console-script wrapper. Prepending inside the script
   # (rather than via --set-default) keeps it working even when the caller has
@@ -81,24 +148,38 @@ let
         p for p in ["@sitePackages@", os.environ.get("PYTHONPATH", "")] if p
     )
 
-    def get_port():
-        """Get port from: 1) PORT env var, 2) config.yaml, 3) default 8000."""
-        if os.getenv("PORT"):
-            return os.getenv("PORT")
-        config_path = Path("config.yaml")
-        if config_path.exists():
-            try:
-                import yaml
-                with open(config_path, 'r', encoding='utf-8') as f:
-                    cfg = yaml.safe_load(f) or {}
-                    return str(cfg.get('server', {}).get('port', 8000))
-            except Exception:
-                pass
-        return "8000"
+    # Mirrors the resolution backend.main performs after patching: an explicit
+    # override wins, then the app root in the store, then the CWD upstream used.
+    def config_path():
+        """Get config.yaml from: 1) NOTEDISCOVERY_CONFIG, 2) app root, 3) CWD."""
+        explicit = os.environ.get("NOTEDISCOVERY_CONFIG")
+        if explicit:
+            return Path(explicit)
+        # An empty root makes this Path("config.yaml"), i.e. the upstream CWD.
+        return Path(os.getenv("NOTEDISCOVERY_ROOT", "")) / "config.yaml"
+
+    def load_config():
+        path = config_path()
+        if not path.exists():
+            return {}
+        try:
+            import yaml
+            with open(path, 'r', encoding='utf-8') as f:
+                return yaml.safe_load(f) or {}
+        except Exception as exc:
+            print(f"notediscovery: ignoring {path}: {exc}", file=sys.stderr)
+            return {}
+
+    def get_host_port():
+        """Get host/port from: 1) env vars, 2) config.yaml, 3) defaults."""
+        server = load_config().get('server', {}) or {}
+        host = os.getenv("HOST") or str(server.get('host', '0.0.0.0'))
+        port = os.getenv("PORT") or str(server.get('port', 8000))
+        return host, port
 
     def main():
-        port = get_port()
-        print(f"NoteDiscovery -> http://localhost:{port}  (Ctrl+C to stop)")
+        host, port = get_host_port()
+        print(f"NoteDiscovery -> http://{host}:{port}  (Ctrl+C to stop)")
         print()
 
         subprocess.call([
@@ -106,7 +187,7 @@ let
             "backend.main:app",
             # --reload watches a source tree the store does not have.
             *(["--reload"] if os.getenv("NOTEDISCOVERY_RELOAD") else []),
-            "--host", "0.0.0.0",
+            "--host", host,
             "--port", port,
             "--timeout-graceful-shutdown", "2"
         ])
@@ -134,8 +215,7 @@ pythonPkgs.buildPythonApplication (finalAttrs: {
   doCheck = false;
 
   postPatch = ''
-    substituteInPlace backend/main.py \
-      --replace-fail 'Path(__file__).parent.parent' 'Path(os.getenv("NOTEDISCOVERY_ROOT", ""))'
+    ${python.interpreter} ${patchConfigLoader} backend/main.py ${configLoaderBlock}
   '';
 
   # run.py shells out to `python -m uvicorn`, so the child interpreter needs the
