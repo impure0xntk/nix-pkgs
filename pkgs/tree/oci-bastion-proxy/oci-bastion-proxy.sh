@@ -25,7 +25,7 @@ fi
 
 SESSION_TTL="${OCI_BASTION_SESSION_TTL:-1800}"
 POLL_INTERVAL="${OCI_BASTION_POLL_INTERVAL:-3}"
-MAX_WAIT="${OCI_BASTION_MAX_WAIT:-180}"
+MAX_WAIT="${OCI_BASTION_MAX_WAIT:-300}"
 
 # OCI_BIN overrides the CLI so a different build/version can be injected.
 OCI=( "${OCI_BIN:-oci}" )
